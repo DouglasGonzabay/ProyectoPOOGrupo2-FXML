@@ -1,6 +1,8 @@
 package espol.poo.proyectopoogrupo2.fxml;
 
 import java.io.IOException;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -26,6 +28,10 @@ public class PrimaryController {
     @FXML
     private void switchToreport() throws IOException {
         App.setRoot("report");
+    }
+    @FXML
+    private void cerrarVentana(ActionEvent e) throws IOException{
+        Platform.exit();
     }
 
 }
