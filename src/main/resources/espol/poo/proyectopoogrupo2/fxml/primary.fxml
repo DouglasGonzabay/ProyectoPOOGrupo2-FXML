@@ -24,7 +24,7 @@
             </Label>
             <Button fx:id="btconf" mnemonicParsing="false" onAction="#switchToconf" prefWidth="110.0" text="Configuraciones" />
             <Button fx:id="btnew" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="25.0" prefWidth="110.0" text="Nuevo Juego" />
-            <Button fx:id="btreport" mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Reporte" />
+            <Button fx:id="btreport" mnemonicParsing="false" onAction="#switchToreport" prefHeight="25.0" prefWidth="110.0" text="Reporte" />
             <Button fx:id="btsalir" mnemonicParsing="false" prefWidth="110.0" text="Salir" />
          </children>
       </VBox>
