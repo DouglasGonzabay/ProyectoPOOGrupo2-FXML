@@ -82,7 +82,7 @@ public class Materia {
 
 //Crea una nueva clase de paralelo que se añade automaticamente al grupo de archivos (Cuando se especifica la ruta a guardar)
   public void agregarParalelo(int numero, TerminoAcademico termino, String ruta){
-    paralelos.add(new Paralelo(numero,Estudiante.listado(ruta)),termino);
+    paralelos.add(new Paralelo(numero,Estudiante.listado(ruta),termino));
   }
   //Crea una nueva clase de paralelo pero creando un archivo vacío de lista de estudiantes
   public void agregarParalelo(int numero, TerminoAcademico termino){
