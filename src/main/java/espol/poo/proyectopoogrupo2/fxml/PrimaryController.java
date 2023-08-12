@@ -23,5 +23,9 @@ public class PrimaryController {
     private void switchToconf() throws IOException {
         App.setRoot("conf");
     }
+    @FXML
+    private void switchToreport() throws IOException {
+        App.setRoot("report");
+    }
 
 }
