@@ -12,10 +12,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import modelo.NewClass;
 import modelo.TerminoAcademico;
 /**
@@ -40,12 +43,20 @@ public class ConfController implements Initializable {
     private Button btsalir1;
     @FXML
     private GridPane panelsecconf;
+    @FXML
+    private FlowPane flow;
+    @FXML
+    private FlowPane panelVisual;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        //TextFlow defaultText = new TextFlow();
+        panelVisual.getChildren().addAll(new Text("No existe información"),new Text(" para mostrar"));
+        //panelVisual.getChildren().add(defaultText);
     }
     @FXML
     private void switchToPrimary() throws IOException {
@@ -54,31 +65,27 @@ public class ConfController implements Initializable {
     }    
     @FXML
     private void visualizar(){
-        panelsecconf.getChildren().clear();
+        panelVisual.getChildren().clear();
+        panelVisual.getChildren().add(new Text("Materias"));
         ArrayList<String> materias =NewClass.presentarMaterias(".\\archivos\\materias.txt");
-        VBox b1=new VBox();
+        //VBox b1=new VBox();
         for (String materia: materias){            
             Text texto= new Text(materia);
-            b1.getChildren().add(texto);            
+            //b1.getChildren().add(texto);
+            panelVisual.getChildren().add(texto);
         }
-        panelsecconf.add(new Text("Materias"), 0, 0);
-        panelsecconf.add(b1, 1, 0);
-        
-    
     }
     @FXML
     private void visualizartermino(){
-        panelsecconf.getChildren().clear();
+        panelVisual.getChildren().clear();
+        panelVisual.getChildren().add(new Text("Términos Académicos"));
         ArrayList<TerminoAcademico> terminos =TerminoAcademico.cargarTerminos(".\\archivos\\TerminosAcademicos.txt");
-        VBox b1=new VBox();
+        //VBox b1=new VBox();
         for (TerminoAcademico termino: terminos){            
             Text texto= new Text(termino.toString());
-            b1.getChildren().add(texto);            
+            //b1.getChildren().add(texto);
+            panelVisual.getChildren().add(texto);            
         }
-        panelsecconf.add(new Text("Términos académicos"), 0, 0);
-        panelsecconf.add(b1, 1, 0);
-        
-    
     }
     
     
