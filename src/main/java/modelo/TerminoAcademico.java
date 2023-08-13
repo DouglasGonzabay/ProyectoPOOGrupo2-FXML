@@ -45,6 +45,7 @@ public class TerminoAcademico {
     ArrayList<TerminoAcademico> terminos = new ArrayList<>();
     try(BufferedReader buff = new BufferedReader(new FileReader(ruta))){
       String leer;
+      buff.readLine();
       while((leer=buff.readLine())!=null){
         String[] lectura = leer.split("-");
         TerminoAcademico ter = new TerminoAcademico(lectura[0],lectura[1]);
@@ -60,7 +61,7 @@ public class TerminoAcademico {
   //NOTA: clase basica para añadior termino, ANTES debe validar que el termino no se encuentre repetido y que el año no sea menor al actual
   public static void anadirTermino(String ruta, TerminoAcademico term){
     try(BufferedWriter write = new BufferedWriter(new FileWriter(ruta,true))){
-      write.write(term.anio + "," + term.numero);
+      write.write(term.anio + "-" + term.numero);
       write.write("\n");
     }
     catch(IOException e){
