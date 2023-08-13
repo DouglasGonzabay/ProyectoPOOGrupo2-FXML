@@ -55,6 +55,8 @@ public class ConfController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //TextFlow defaultText = new TextFlow();
+        panelVisual.setStyle("-fx-background-color:WHITE");
+        vboxconf.setStyle("-fx-background-color:AQUA");
         panelVisual.getChildren().addAll(new Text("No existe información"),new Text(" para mostrar"));
         //panelVisual.getChildren().add(defaultText);
     }
