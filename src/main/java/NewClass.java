@@ -14,7 +14,7 @@ import java.io.IOException;
 import modelo.*;
 import java.util.ArrayList;
 public class NewClass {
-    public static ArrayList<Materia> presentarMaterias (String ruta){
+    public static ArrayList<String> presentarMaterias (String ruta){
         try(BufferedReader bff = new BufferedReader(new FileReader(ruta))){
             String linea = bff.readLine();
             ArrayList<String> materias = new ArrayList<>() ;
