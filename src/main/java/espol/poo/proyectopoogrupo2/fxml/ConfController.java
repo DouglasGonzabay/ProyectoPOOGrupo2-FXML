@@ -17,6 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import modelo.NewClass;
+import modelo.TerminoAcademico;
 /**
  * FXML Controller class
  *
@@ -60,6 +61,19 @@ public class ConfController implements Initializable {
             b1.getChildren().add(texto);            
         }
         panelsecconf.add(new Text("Materias"), 0, 0);
+        panelsecconf.add(b1, 1, 0);
+        
+    
+    }
+    @FXML
+    private void visualizartermino(){
+        ArrayList<TerminoAcademico> terminos =TerminoAcademico.cargarTerminos(".\\archivos\\TerminosAcademicos.txt");
+        VBox b1=new VBox();
+        for (TerminoAcademico termino: terminos){            
+            Text texto= new Text(termino.toString());
+            b1.getChildren().add(texto);            
+        }
+        panelsecconf.add(new Text("Términos académicos"), 0, 0);
         panelsecconf.add(b1, 1, 0);
         
     
