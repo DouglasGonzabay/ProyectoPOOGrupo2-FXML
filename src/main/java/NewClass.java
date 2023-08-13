@@ -14,12 +14,21 @@ import java.io.IOException;
 import modelo.*;
 import java.util.ArrayList;
 public class NewClass {
-    public static ArrayList<Materia> leerMaterias (String ruta){
+    public static ArrayList<Materia> presentarMaterias (String ruta){
         try(BufferedReader bff = new BufferedReader(new FileReader(ruta))){
             String linea = bff.readLine();
-            ArrayList<Materia> materias = new ArrayList<>() ;
+            ArrayList<String> materias = new ArrayList<>() ;
             while( (linea = bff.readLine()) != null ){
                 String[] info = linea.split("/");
+                String materia= info[0];
+                String cod = info[1];
+                String[] paralelos = info[2].split(",");
+                for(String p : paralelos){
+                
+                
+                
+                }
+                
                 
             
             
