@@ -11,7 +11,7 @@
    <left>
       <VBox fx:id="vboxconf" alignment="CENTER" prefHeight="522.0" prefWidth="274.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btadminter" mnemonicParsing="false" prefHeight="25.0" prefWidth="205.0" text="Administrar Términos Académicos" />
+            <Button fx:id="btadminter" mnemonicParsing="false" onAction="#visualizartermino" prefHeight="25.0" prefWidth="205.0" text="Administrar Términos Académicos" />
             <Button fx:id="btadminmat" mnemonicParsing="false" onAction="#visualizar" prefWidth="205.0" text="Administrar Materias y Paralelos" />
             <Button fx:id="btadminpreg" mnemonicParsing="false" prefWidth="205.0" text="Administrar Preguntas" />
             <Button fx:id="btsalir1" mnemonicParsing="false" onAction="#switchToPrimary" prefWidth="205.0" text="Salir" />
