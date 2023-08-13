@@ -20,6 +20,7 @@ public class TerminoAcademico {
   }
 
   //metodos
+    @Override
   public String toString(){
     return "PAO-"+numero+"-"+anio;
   }
@@ -45,7 +46,7 @@ public class TerminoAcademico {
     try(BufferedReader buff = new BufferedReader(new FileReader(ruta))){
       String leer;
       while((leer=buff.readLine())!=null){
-        String[] lectura = leer.split(",");
+        String[] lectura = leer.split("-");
         TerminoAcademico ter = new TerminoAcademico(lectura[0],lectura[1]);
         terminos.add(ter);
       }
@@ -82,4 +83,5 @@ public class TerminoAcademico {
     }
     
 }
+
 }
