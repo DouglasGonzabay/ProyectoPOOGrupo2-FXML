@@ -54,6 +54,7 @@ public class ConfController implements Initializable {
     }    
     @FXML
     private void visualizar(){
+        panelsecconf.getChildren().clear();
         ArrayList<String> materias =NewClass.presentarMaterias(".\\archivos\\materias.txt");
         VBox b1=new VBox();
         for (String materia: materias){            
@@ -67,6 +68,7 @@ public class ConfController implements Initializable {
     }
     @FXML
     private void visualizartermino(){
+        panelsecconf.getChildren().clear();
         ArrayList<TerminoAcademico> terminos =TerminoAcademico.cargarTerminos(".\\archivos\\TerminosAcademicos.txt");
         VBox b1=new VBox();
         for (TerminoAcademico termino: terminos){            
