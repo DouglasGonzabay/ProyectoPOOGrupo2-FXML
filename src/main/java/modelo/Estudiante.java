@@ -36,9 +36,10 @@ public class Estudiante{
     ArrayList<Estudiante> lista = new ArrayList<>();
     try(BufferedReader br = new BufferedReader(new FileReader(ruta))){
       String lectura;
+      br.readLine();
       while((lectura=br.readLine())!=null){
-        String[] estudiante = lectura.split(",");
-        Estudiante e = new Estudiante(estudiante[0],(Integer.parseInt(estudiante[1])));
+        String[] estudiante = lectura.split(";");
+        Estudiante e = new Estudiante(estudiante[1],(Integer.parseInt(estudiante[0])));
       }
     }
     catch(IOException e){
@@ -50,7 +51,7 @@ public class Estudiante{
   public static void escribirListado(String ruta, ArrayList<Estudiante> estudiantes){
     try(BufferedWriter write = new BufferedWriter(new FileWriter(ruta))){
       for(Estudiante e: estudiantes){
-        String alumno = e.nombre + ","+e.matricula;
+        String alumno = e.matricula + ";"+e.nombre;
         write.write(alumno);
         write.write("\n");
       }
