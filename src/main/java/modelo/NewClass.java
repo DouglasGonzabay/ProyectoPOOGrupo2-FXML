@@ -115,9 +115,23 @@ public class NewClass {
     }
 
     public static void main(String[] arr){
+        //Comprobación de métodos
         ArrayList<String> materias =NewClass.presentarMaterias(".\\archivos\\materias.txt");
         for(String m: materias){
             System.out.println(m);
+        }
+        ArrayList<Materia> materias2 = NewClass.leerMaterias(".\\archivos\\materias.txt");
+        for(Materia m: materias2){
+            System.out.println(m);
+            for(Paralelo p: m.getParalelos()){
+                if(p.getLista()==null){
+                    System.out.println("Paralelo: "+p.getNumParalelo() + " Estudiantes: No ubicados");
+                }
+                else{
+                    System.out.println("Paralelo: "+p.getNumParalelo() + " Estudiantes: " + p.getLista().size());
+                }
+                
+            }
         }
    
     }
