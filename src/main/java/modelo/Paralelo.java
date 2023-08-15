@@ -15,6 +15,12 @@ public class Paralelo {
   private int numeroParalelo;
   private ArrayList<Estudiante> listae;
   
+  public Paralelo(int n,TerminoAcademico t){
+      listae = null;
+      numeroParalelo = n;
+      termino = t;
+  }
+  
   public Paralelo(int n, ArrayList<Estudiante> l, TerminoAcademico t){
     this(n);
     listae = l;
