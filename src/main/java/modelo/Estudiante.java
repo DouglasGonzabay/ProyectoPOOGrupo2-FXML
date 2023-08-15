@@ -40,6 +40,7 @@ public class Estudiante{
       while((lectura=br.readLine())!=null){
         String[] estudiante = lectura.split(";");
         Estudiante e = new Estudiante(estudiante[1],(Integer.parseInt(estudiante[0])));
+        lista.add(e);
       }
     }
     catch(IOException e){
