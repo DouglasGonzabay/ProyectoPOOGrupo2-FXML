@@ -20,6 +20,29 @@ public class Materia {
   private ArrayList<Pregunta> preguntas;
   private ArrayList<Paralelo> paralelos;
   ////////////////////////////////////////
+  public Materia(String n, String cod, int nv){
+    nombre = n;
+    codigo = cod;
+    niveles = nv;
+    paralelos = null;
+    preguntas = null;
+  }
+  public Materia(String n, String cod, int nv, ArrayList<Paralelo> p){
+    nombre = n;
+    codigo = cod;
+    niveles = nv;
+    paralelos = p;
+    preguntas = null;      
+  }
+  public Materia(String n, String cod, ArrayList<Pregunta> preguntas, int nv){
+    nombre = n;
+    codigo = cod;
+    niveles = nv;
+    paralelos = null;
+    this.preguntas = preguntas;
+    Collections.sort(preguntas);      
+  }
+  
   public Materia(String n, String cod, int nv, ArrayList<Paralelo> p, ArrayList<Pregunta> preguntas){
     nombre = n;
     codigo = cod;
