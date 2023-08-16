@@ -1,15 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <TextField layoutX="342.0" layoutY="72.0" />
-      <TextField layoutX="342.0" layoutY="140.0" />
-      <TextField layoutX="342.0" layoutY="206.0" />
-      <Button layoutX="274.0" layoutY="310.0" mnemonicParsing="false" text="Atrás" />
-   </children>
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectopoogrupo2.fxml.SecondaryController">
+   <top>
+      <Label text="Nuevo juego" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="Comic Sans MS" size="24.0" />
+         </font>
+      </Label>
+   </top>
+   <center>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="365.0" prefWidth="170.0">
+               <children>
+                  <ComboBox fx:id="slmateria" prefWidth="150.0" promptText="Seleccionar materia" />
+                  <ComboBox fx:id="slparalelo" prefWidth="150.0" promptText="Seleccionar paralelo" />
+               </children>
+            </VBox>
+            <VBox prefHeight="365.0" prefWidth="134.0">
+               <children>
+                  <TextField fx:id="ingnivel" promptText="Ingresar nivel" />
+                  <VBox prefHeight="275.0" prefWidth="134.0" />
+               </children>
+            </VBox>
+            <VBox prefHeight="365.0" prefWidth="143.0">
+               <children>
+                  <VBox fx:id="vbparticipante" alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <ScrollBar orientation="VERTICAL" prefHeight="371.0" prefWidth="15.0" />
+                        <ScrollBar />
+                     </children>
+                  </VBox>
+                  <Label text="Estudiante elegido:" />
+               </children>
+            </VBox>
+            <VBox fx:id="vbcompanero" prefHeight="365.0" prefWidth="152.0">
+               <children>
+                  <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="97.0">
+                     <children>
+                        <ScrollBar orientation="VERTICAL" prefHeight="365.0" prefWidth="15.0" />
+                        <ScrollBar />
+                     </children>
+                  </VBox>
+                  <Button fx:id="btazar" mnemonicParsing="false" text="Elegir al azar" />
+                  <Label text="Estudiante elegido:" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btatras" mnemonicParsing="false" onAction="#switchToPrimary" text="Atrás" />
+            <Button fx:id="btempezar" mnemonicParsing="false" text="Empezar" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
