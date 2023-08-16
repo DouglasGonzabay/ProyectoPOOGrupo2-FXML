@@ -15,6 +15,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import java.io.*;
+import javafx.scene.control.ScrollPane;
 /**
  * FXML Controller class
  *
@@ -39,6 +40,10 @@ public class SecondaryController implements Initializable {
     private VBox vbcompanero;
     @FXML
     private Button btazar;
+    @FXML
+    private ScrollPane scrollEstudiante;
+    @FXML
+    private ScrollPane scrollCompanero;
     /**
      * Initializes the controller class.
      */
