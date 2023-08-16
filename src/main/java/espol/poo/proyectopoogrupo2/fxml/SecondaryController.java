@@ -40,10 +40,12 @@ public class SecondaryController implements Initializable {
     private VBox vbcompanero;
     @FXML
     private Button btazar;
+    /*
     @FXML
     private ScrollPane scrollEstudiante;
     @FXML
     private ScrollPane scrollCompanero;
+    */
     /**
      * Initializes the controller class.
      */
