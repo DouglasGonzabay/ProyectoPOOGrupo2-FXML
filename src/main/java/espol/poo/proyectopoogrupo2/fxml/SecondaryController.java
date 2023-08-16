@@ -16,10 +16,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import java.io.*;
 import java.util.ArrayList;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
+import modelo.Estudiante;
 import modelo.Materia;
 import modelo.NewClass;
+import modelo.Paralelo;
 /**
  * FXML Controller class
  *
@@ -35,7 +39,7 @@ public class SecondaryController implements Initializable {
     @FXML
     private ComboBox<Materia> slmateria;
     @FXML
-    private ComboBox<?> slparalelo;
+    private ComboBox<Paralelo> slparalelo;
     @FXML
     private TextField ingnivel;
     @FXML
@@ -61,11 +65,45 @@ public class SecondaryController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         ArrayList<Materia> materias2 = NewClass.leerMaterias(".\\archivos\\materias.txt");
         slmateria.getItems().setAll(materias2);
+        slparalelo.setDisable(true);
+        //scrollEstudiante.setPrefSize(300, 300);
+        //scrollCompanero.setPrefSize(300, 300);
         // TODO
     }  
     @FXML
     private void switchToPrimary() throws IOException {
         App.setRoot("primary");
+    }
+    @FXML
+    private void modParalelo(ActionEvent event){
+        slparalelo.setDisable(false);
+        ArrayList<Paralelo> par = (ArrayList<Paralelo>)slmateria.getValue().getParalelos();
+        slparalelo.getItems().setAll(par);
+    }
+    @FXML
+    private void cargarEstudiantes(ActionEvent event){
+        ArrayList<Estudiante> estudiantes = (ArrayList<Estudiante>)slparalelo.getValue().getLista();
+        if(estudiantes == null){
+            scrollEstudiante.getChildren().add(new Label("No hay Estudiantes"));
+            scrollCompanero.getChildren().add(new Label("No hay Estudiantes"));
+        }
+        else{
+            VBox estudiante = new VBox();
+            VBox companero = new VBox();
+            int n=0;
+            for(Estudiante e: estudiantes){
+                Button est = new Button(e.toString());
+                Button com = new Button(e.toString());
+                estudiante.getChildren().add(est);
+                companero.getChildren().add(com);
+                n+=25;
+            }
+            scrollEstudiante.getChildren().add(estudiante);
+            scrollCompanero.getChildren().add(companero);
+            //Regula el tamaño acorde al tamaño predeterminado de un botón
+            scrollEstudiante.setPrefSize(350,n);
+            scrollCompanero.setPrefSize(350,n);
+        }
     }
 
 }
