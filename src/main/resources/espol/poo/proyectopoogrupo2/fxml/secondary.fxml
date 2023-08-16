@@ -20,21 +20,15 @@
       </Label>
    </top>
    <center>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox prefHeight="365.0" prefWidth="170.0">
-               <children>
-                  <ComboBox fx:id="slmateria" prefWidth="150.0" promptText="Seleccionar materia" />
-                  <ComboBox fx:id="slparalelo" prefWidth="150.0" promptText="Seleccionar paralelo" />
-               </children>
-            </VBox>
             <VBox prefHeight="365.0" prefWidth="134.0">
                <children>
                   <TextField fx:id="ingnivel" promptText="Ingresar nivel" />
                   <VBox prefHeight="275.0" prefWidth="134.0" />
                </children>
             </VBox>
-            <VBox fx:id="vbparticipante" prefHeight="365.0" prefWidth="143.0">
+            <VBox fx:id="vbparticipante" prefHeight="365.0" prefWidth="143.0" spacing="20.0">
                <children>
                   <ScrollPane prefHeight="200.0" prefWidth="200.0">
                     <content>
@@ -44,7 +38,7 @@
                   <Label text="Estudiante elegido:" />
                </children>
             </VBox>
-            <VBox fx:id="vbcompanero" prefHeight="365.0" prefWidth="152.0">
+            <VBox fx:id="vbcompanero" prefHeight="365.0" prefWidth="152.0" spacing="5.0">
                <children>
                   <ScrollPane prefHeight="200.0" prefWidth="200.0">
                     <content>
@@ -66,4 +60,12 @@
          </children>
       </HBox>
    </bottom>
+   <left>
+      <VBox prefHeight="365.0" prefWidth="170.0" spacing="40.0" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <ComboBox fx:id="slmateria" onAction="#modParalelo" prefWidth="150.0" promptText="Seleccionar materia" />
+            <ComboBox fx:id="slparalelo" onAction="#cargarEstudiantes" prefWidth="150.0" promptText="Seleccionar paralelo" />
+         </children>
+      </VBox>
+   </left>
 </BorderPane>
