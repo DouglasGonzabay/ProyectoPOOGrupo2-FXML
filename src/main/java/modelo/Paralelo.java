@@ -56,4 +56,14 @@ public class Paralelo {
     return lista;
    
   }
+  public String toString(){
+      String s;
+      if((numeroParalelo+"").length()==1){
+          s = "P0"+numeroParalelo+"-"+termino.toString();
+      }
+      else{
+          s = "P"+numeroParalelo+"-"+termino.toString();
+      }
+      return s;
+  }
 }
