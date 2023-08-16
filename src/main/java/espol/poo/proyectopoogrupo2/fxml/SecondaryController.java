@@ -66,8 +66,8 @@ public class SecondaryController implements Initializable {
         ArrayList<Materia> materias2 = NewClass.leerMaterias(".\\archivos\\materias.txt");
         slmateria.getItems().setAll(materias2);
         slparalelo.setDisable(true);
-        //scrollEstudiante.setPrefSize(300, 300);
-        //scrollCompanero.setPrefSize(300, 300);
+        scrollEstudiante.setPrefSize(100, 200);
+        scrollCompanero.setPrefSize(100, 200);
         // TODO
     }  
     @FXML
@@ -82,10 +82,14 @@ public class SecondaryController implements Initializable {
     }
     @FXML
     private void cargarEstudiantes(ActionEvent event){
+        scrollEstudiante.getChildren().clear();
+        scrollCompanero.getChildren().clear();
         ArrayList<Estudiante> estudiantes = (ArrayList<Estudiante>)slparalelo.getValue().getLista();
         if(estudiantes == null){
             scrollEstudiante.getChildren().add(new Label("No hay Estudiantes"));
             scrollCompanero.getChildren().add(new Label("No hay Estudiantes"));
+            scrollEstudiante.setPrefSize(100, 200);
+            scrollCompanero.setPrefSize(100, 200);
         }
         else{
             VBox estudiante = new VBox();
