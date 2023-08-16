@@ -15,8 +15,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import java.io.*;
+import java.util.ArrayList;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import modelo.Materia;
+import modelo.NewClass;
 /**
  * FXML Controller class
  *
@@ -30,7 +33,7 @@ public class SecondaryController implements Initializable {
     @FXML
     private Button btempezar;
     @FXML
-    private ComboBox<?> slmateria;
+    private ComboBox<Materia> slmateria;
     @FXML
     private ComboBox<?> slparalelo;
     @FXML
@@ -56,6 +59,8 @@ public class SecondaryController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        ArrayList<Materia> materias2 = NewClass.leerMaterias(".\\archivos\\materias.txt");
+        slmateria.getItems().setAll(materias2);
         // TODO
     }  
     @FXML
