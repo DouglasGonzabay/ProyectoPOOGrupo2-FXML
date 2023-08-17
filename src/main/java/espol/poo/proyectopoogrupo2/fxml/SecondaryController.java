@@ -67,7 +67,9 @@ public class SecondaryController implements Initializable {
         slmateria.getItems().setAll(materias2);
         slparalelo.setDisable(true);
         scrollEstudiante.setPrefSize(100, 200);
+        scrollEstudiante.setStyle("-fx-background-color:WHITE");
         scrollCompanero.setPrefSize(100, 200);
+        scrollCompanero.setStyle("-fx-background-color:WHITE");
         // TODO
     }  
     @FXML
@@ -97,7 +99,9 @@ public class SecondaryController implements Initializable {
             int n=0;
             for(Estudiante e: estudiantes){
                 Button est = new Button(e.toString());
+                est.setStyle("-fx-background-color:WHITE");
                 Button com = new Button(e.toString());
+                com.setStyle("-fx-background-color:WHITE");
                 estudiante.getChildren().add(est);
                 companero.getChildren().add(com);
                 n+=25;
