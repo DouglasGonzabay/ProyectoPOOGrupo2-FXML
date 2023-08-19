@@ -89,6 +89,42 @@ public class ConfController implements Initializable {
             panelVisual.getChildren().add(texto);            
         }
     }
+    @FXML
+    private void aTermino(){
+        panelsecconf.getChildren().clear();
+        visualizartermino();
+        Button inTermino=new Button("Ingresar término");
+        Button ediTermino=new Button("Editar término");
+        Button confTermino=new Button("Configurar término");
+        inTermino.setWrapText(true);
+        ediTermino.setWrapText(true);
+        confTermino.setWrapText(true);
+        panelsecconf.add(inTermino, 0, 0);
+        panelsecconf.add(ediTermino, 0, 1);
+        panelsecconf.add(confTermino, 0, 2);
+    }
+    @FXML
+    private void ediMateriaParalelo(){
+        panelsecconf.getChildren().clear();
+        visualizar();
+        Button inMateria=new Button("Ingresar materia");
+        Button ediMateria=new Button("Editar materia");
+        Button agParalelo=new Button("Agregar paralelo");
+        Button elimParalelo=new Button("Eliminar paralelo");
+        panelsecconf.add(inMateria, 0, 0);
+        panelsecconf.add(ediMateria, 0, 1);
+        panelsecconf.add(agParalelo, 0, 2);
+        panelsecconf.add(elimParalelo, 0, 3);
+    }
+    @FXML
+    private void adPreguntas(){
+        panelsecconf.getChildren().clear();
+        visualizar();
+        Button agPregunta=new Button("Agregar pregunta");
+        Button elimPregunta=new Button("Eliminar pregunta");
+        panelsecconf.add(agPregunta, 0, 0);
+        panelsecconf.add(elimPregunta, 0, 1);
+    }
     
     
 }
