@@ -161,12 +161,11 @@ public class ConfController implements Initializable {
             cajita.setPromptText("Escoja un Termino");
             cajita.setOnAction(j->{
                TerminoAcademico leer = (TerminoAcademico) cajita.getValue();
-               //TerminoAcademico cambiar = TerminoAcademico.busqueda(terminos, leer);
-               //int indice = terminos.indexOf(cambiar);
+               TerminoAcademico cambiar = TerminoAcademico.busqueda(terminos, leer);
+               int indice = terminos.indexOf(cambiar);
                ComboBox<String> cajita1 = new ComboBox<>();
                cajita1.getItems().setAll("Año","Numero de termino");
                cajita1.setPromptText("Escoja una opcion");
-               /*
                cajita1.setOnAction(r -> {
                    String lectura = (String) cajita1.getValue();
                    TextField newC = new TextField();
@@ -179,7 +178,6 @@ public class ConfController implements Initializable {
                    
                 v1.getChildren().addAll(newC,bt);
                });
-               */
                 v1.getChildren().add(cajita1);
             });
             v1.getChildren().add(cajita);
