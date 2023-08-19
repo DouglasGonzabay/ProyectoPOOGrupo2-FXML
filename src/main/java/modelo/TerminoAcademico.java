@@ -57,6 +57,23 @@ public class TerminoAcademico {
     }
     return terminos;
   }
+  //Para validar clases
+  public static ArrayList<String> cargarTerminosString(String ruta){
+    ArrayList<String> terminos = new ArrayList<>();
+    try(BufferedReader buff = new BufferedReader(new FileReader(ruta))){
+      String leer;
+      buff.readLine();
+      while((leer=buff.readLine())!=null){
+        String[] lectura = leer.split("-");
+        TerminoAcademico ter = new TerminoAcademico(lectura[0],lectura[1]);
+        terminos.add(ter.toString());
+      }
+    }
+    catch(IOException e){
+      e.printStackTrace();
+    }
+    return terminos;
+  }
   //Añade un nuevo termino académico al archivo de terminos academicos establecidos
   //NOTA: clase basica para añadior termino, ANTES debe validar que el termino no se encuentre repetido y que el año no sea menor al actual
   public static void anadirTermino(String ruta, TerminoAcademico term){
@@ -74,7 +91,7 @@ public class TerminoAcademico {
     //FileWriter no recibe un true por lo que elimina el contenido y lo vuelve a agregar
     try(BufferedWriter write = new BufferedWriter(new FileWriter(ruta))){
       for(TerminoAcademico ter: t){
-        write.write(ter.anio + "," + ter.numero);
+        write.write(ter.anio + "-" + ter.numero);
         write.write("\n");
       }
 
@@ -84,5 +101,14 @@ public class TerminoAcademico {
     }
     
 }
+  public static void main(String[] args){
+      ArrayList<String> t = TerminoAcademico.cargarTerminosString(".\\archivos\\TerminosAcademicos.txt");
+      for(String ter: t){
+          System.out.println(ter);
+      }
+      TerminoAcademico termino = new TerminoAcademico("2023","1");
+      System.out.println(t.contains(termino.toString()));
+      
+  }
 
 }
