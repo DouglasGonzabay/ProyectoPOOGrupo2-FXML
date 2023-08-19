@@ -112,31 +112,32 @@ public class ConfController implements Initializable {
                 n=t2.getText();
                 int numero=Integer.parseInt(n);
                 int a=Integer.parseInt(anio);
-                if(numero>2 || a<2023 || numero==0 ){
+                boolean terminoExiste = TerminoAcademico.cargarTerminosString(".\\archivos\\TerminosAcademicos.txt").contains((new TerminoAcademico(anio,n)).toString());
+                if(numero>2 || a<2023 || numero==0 || terminoExiste){
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Resultado de operacion");
                     alert.setHeaderText("Notificacion");
-                    alert.setContentText("El año debe ser mayor al actual (2023) y el termino no puede \nsuperar el 2 ni ser 0");
+                    if(terminoExiste){
+                       alert.setContentText("El término académico agregado ya existe"); 
+                    }
+                    else{
+                        alert.setContentText("El año debe ser mayor al actual (2023) y el termino no puede \nsuperar el 2 ni ser 0 ");
+                    }
+                    
                     alert.showAndWait();
                     t1.setText("");
                     t2.setText("");
-                }else{
+                }
+                else{
                     TerminoAcademico.anadirTermino(".\\archivos\\TerminosAcademicos.txt",new TerminoAcademico(anio,n));
-                    Alert alert3 = new Alert(Alert.AlertType.INFORMATION);
-                    alert3.setTitle("Resultado de operacion");
-                    alert3.setHeaderText("Notificacion");
-                    alert3.setContentText("Ingreso de datos exitoso");
-                    alert3.showAndWait();
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Ingreso de datos exitoso");
+                    //Actualiza visor de terminos
+                    visualizartermino();
                     t1.setText("");
                     t2.setText("");
                 }
                 }catch(NumberFormatException nb){
-                   
-                    Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
-                    alert1.setTitle("Resultado de operacion");
-                    alert1.setHeaderText("Notificacion");
-                    alert1.setContentText("Ingreso de datos incorrectos");
-                    alert1.showAndWait();
+                   mostrarAlerta(Alert.AlertType.INFORMATION, "Ingreso de datos incorrectos");
                     t1.setText("");
                     t2.setText("");
                     
@@ -179,6 +180,16 @@ public class ConfController implements Initializable {
         panelsecconf.add(preguntas, 0, 0);
         panelsecconf.add(agPregunta, 0, 1);
         panelsecconf.add(elimPregunta, 0, 2);
+    }
+    
+    
+    public void mostrarAlerta(Alert.AlertType tipo, String mensaje) {
+        Alert alert = new Alert(tipo);
+
+        alert.setTitle("Resultado de operacion");
+        alert.setHeaderText("Notificacion");
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
     
     
