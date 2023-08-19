@@ -10,15 +10,19 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import modelo.Materia;
 import modelo.NewClass;
 import modelo.TerminoAcademico;
 /**
@@ -94,6 +98,53 @@ public class ConfController implements Initializable {
         panelsecconf.getChildren().clear();
         visualizartermino();
         Button inTermino=new Button("Ingresar término");
+        inTermino.setOnAction(e->{
+            VBox v1=new VBox(5); 
+            TextField t1=new TextField();
+            t1.setPromptText("Año");
+            TextField t2=new TextField();
+            t2.setPromptText("Número");
+            Button aplicar=new Button("Aplicar");
+            aplicar.setOnAction(h->{
+                try{
+                String anio, n;
+                anio=t1.getText();
+                n=t2.getText();
+                int numero=Integer.parseInt(n);
+                int a=Integer.parseInt(anio);
+                if(numero>2 || a<2023 || numero==0 ){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Resultado de operacion");
+                    alert.setHeaderText("Notificacion");
+                    alert.setContentText("El año debe ser mayor al actual (2023) y el termino no puede \nsuperar el 2 ni ser 0");
+                    alert.showAndWait();
+                    t1.setText("");
+                    t2.setText("");
+                }else{
+                    TerminoAcademico.anadirTermino(".\\archivos\\TerminosAcademicos.txt",new TerminoAcademico(anio,n));
+                    Alert alert3 = new Alert(Alert.AlertType.INFORMATION);
+                    alert3.setTitle("Resultado de operacion");
+                    alert3.setHeaderText("Notificacion");
+                    alert3.setContentText("Ingreso de datos exitoso");
+                    alert3.showAndWait();
+                    t1.setText("");
+                    t2.setText("");
+                }
+                }catch(NumberFormatException nb){
+                   
+                    Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                    alert1.setTitle("Resultado de operacion");
+                    alert1.setHeaderText("Notificacion");
+                    alert1.setContentText("Ingreso de datos incorrectos");
+                    alert1.showAndWait();
+                    t1.setText("");
+                    t2.setText("");
+                    
+                }
+            });
+            v1.getChildren().addAll(t1,t2,aplicar);
+            panelsecconf.add(v1,1,0);
+        });
         Button ediTermino=new Button("Editar término");
         Button confTermino=new Button("Configurar término");
         inTermino.setWrapText(true);
@@ -119,10 +170,15 @@ public class ConfController implements Initializable {
     @FXML
     private void adPreguntas(){
         panelsecconf.getChildren().clear();
+        ArrayList<Materia>materias=NewClass.leerMaterias(".\\archivos\\materias.txt");;
+        ComboBox<Materia> preguntas=new ComboBox<>();
+        preguntas.getItems().setAll(materias);
+        preguntas.setPromptText("Escoja una Materia");
         Button agPregunta=new Button("Agregar pregunta");
         Button elimPregunta=new Button("Eliminar pregunta");
-        panelsecconf.add(agPregunta, 0, 0);
-        panelsecconf.add(elimPregunta, 0, 1);
+        panelsecconf.add(preguntas, 0, 0);
+        panelsecconf.add(agPregunta, 0, 1);
+        panelsecconf.add(elimPregunta, 0, 2);
     }
     
     
