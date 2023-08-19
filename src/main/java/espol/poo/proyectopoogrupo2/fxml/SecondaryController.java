@@ -81,6 +81,9 @@ public class SecondaryController implements Initializable {
         slparalelo.setDisable(false);
         ArrayList<Paralelo> par = (ArrayList<Paralelo>)slmateria.getValue().getParalelos();
         slparalelo.getItems().setAll(par);
+        //Borra la lista de estudiantes para evitar que se realice una selección erronea
+        scrollEstudiante.getChildren().clear();
+        scrollCompanero.getChildren().clear();
     }
     @FXML
     private void cargarEstudiantes(ActionEvent event){
