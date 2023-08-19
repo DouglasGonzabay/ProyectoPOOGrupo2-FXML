@@ -106,10 +106,12 @@ public class TerminoAcademico {
          String tr = t.get(i).toString();
          String tr1 = ter.toString();
          if(tr.equals(tr1)){
+          TerminoAcademico terR = t.get(i);
           i = t.size()+1;
-         return t.get(i);
+         return terR;
          }        
      }
      return null;
  }
+ 
 }
