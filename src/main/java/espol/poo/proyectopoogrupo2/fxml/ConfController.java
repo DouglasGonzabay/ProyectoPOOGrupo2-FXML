@@ -119,7 +119,6 @@ public class ConfController implements Initializable {
     @FXML
     private void adPreguntas(){
         panelsecconf.getChildren().clear();
-        visualizar();
         Button agPregunta=new Button("Agregar pregunta");
         Button elimPregunta=new Button("Eliminar pregunta");
         panelsecconf.add(agPregunta, 0, 0);
