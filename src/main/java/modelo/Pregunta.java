@@ -139,7 +139,7 @@ public class Pregunta implements Comparable<Pregunta>, Serializable{
     }
   }
   public static void main(String[] args){
-    /*
+  /*  
     Pregunta pregunta1 = new Pregunta("¿Cuál es el atributo de campo que permite acceder a cualquier atributo o metodo sin impedimento alguno?", 1, "Public","Private","Protected","Defect");
   Pregunta pregunta2 = new Pregunta("Si tenemos que escribir por consola una variable de tipo char ¿Cúal de estas opciones es la correcta para inicializar una variable char por Scanner (Scanner sc = new Scanner(System.in)): ", 1, "sc.next().charAt(0)","sc.nextChar()","sc.nexInt()","sc.nextLine()");
   Pregunta pregunta3 = new Pregunta("¿Cual debe ser la salida de la siguiente linea?: String mes = String(12)", 2, "Error","12","String 12","Ninguna de las anteriores");
@@ -147,19 +147,19 @@ public class Pregunta implements Comparable<Pregunta>, Serializable{
     preguntas.add(pregunta1);
     preguntas.add(pregunta2);
     preguntas.add(pregunta3);
-    Pregunta.escribirPreguntas("archivo/preguntas.dat",preguntas);
-    */
+    Pregunta.escribirPreguntas(".\\archivos\\CCPG1052.dat",preguntas);
     
-    //Pregunta pregunta4 = new Pregunta("¿Cuál palabra cable sirve para heredar los metodos y atributos de una clase Padre a una clase Hija?", 2, "extends ","extend","implements","inherit");
-    ArrayList<Pregunta> preguntas = Pregunta.leerPreguntas("archivo/preguntas.dat");
     
-    //preguntas.add(pregunta4);
-    //Pregunta.escribirPreguntas("archivo/preguntas.dat",preguntas);
+    Pregunta pregunta4 = new Pregunta("¿Cuál palabra clave sirve para heredar los metodos y atributos de una clase Padre a una clase Hija?", 2, "extends ","extend","implements","inherit");
+    ArrayList<Pregunta> preguntas = Pregunta.leerPreguntas(".\\archivos\\CCPG1052.dat");
+    
+    preguntas.add(pregunta4);
+    Pregunta.escribirPreguntas(".\\archivos\\CCPG1052.dat",preguntas);
     
     for(Pregunta p: preguntas){
       System.out.println(p.mostrarPregunta());
     }
-    
+    */
   }
   
   
