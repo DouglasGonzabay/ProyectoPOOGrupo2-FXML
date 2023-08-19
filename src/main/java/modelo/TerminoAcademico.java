@@ -101,14 +101,15 @@ public class TerminoAcademico {
     }
     
 }
-  public static void main(String[] args){
-      ArrayList<String> t = TerminoAcademico.cargarTerminosString(".\\archivos\\TerminosAcademicos.txt");
-      for(String ter: t){
-          System.out.println(ter);
-      }
-      TerminoAcademico termino = new TerminoAcademico("2023","1");
-      System.out.println(t.contains(termino.toString()));
-      
-  }
-
+ public static TerminoAcademico busqueda(ArrayList<TerminoAcademico> t,TerminoAcademico ter){
+     for(int i =0; i<t.size();i++){
+         String tr = t.get(i).toString();
+         String tr1 = ter.toString();
+         if(tr.equals(tr1)){
+          i = t.size()+1;
+         return t.get(i);
+         }        
+     }
+     return null;
+ }
 }
