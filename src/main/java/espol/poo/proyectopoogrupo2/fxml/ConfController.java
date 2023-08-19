@@ -147,7 +147,7 @@ public class ConfController implements Initializable {
             });
             //v2.getChildren().addAll(t1,t2,aplicar);
             v1.getChildren().addAll(t1,t2,aplicar);
-            panelsecconf.add(v1,3,0);
+            //panelsecconf.add(v1,3,0);
         });
         
         
@@ -161,11 +161,12 @@ public class ConfController implements Initializable {
             cajita.setPromptText("Escoja un Termino");
             cajita.setOnAction(j->{
                TerminoAcademico leer = (TerminoAcademico) cajita.getValue();
-               TerminoAcademico cambiar = TerminoAcademico.busqueda(terminos, leer);
-               int indice = terminos.indexOf(cambiar);
+               //TerminoAcademico cambiar = TerminoAcademico.busqueda(terminos, leer);
+               //int indice = terminos.indexOf(cambiar);
                ComboBox<String> cajita1 = new ComboBox<>();
                cajita1.getItems().setAll("Año","Numero de termino");
                cajita1.setPromptText("Escoja una opcion");
+               /*
                cajita1.setOnAction(r -> {
                    String lectura = (String) cajita1.getValue();
                    TextField newC = new TextField();
@@ -178,11 +179,12 @@ public class ConfController implements Initializable {
                    
                 v1.getChildren().addAll(newC,bt);
                });
+               */
                 v1.getChildren().add(cajita1);
             });
             v1.getChildren().add(cajita);
             
-         panelsecconf.add(v1,3,0);
+         //panelsecconf.add(v1,3,1);
         }
         );
         
@@ -196,6 +198,7 @@ public class ConfController implements Initializable {
         panelsecconf.add(inTermino, 0, 0);
         panelsecconf.add(ediTermino, 0, 1);
         panelsecconf.add(confTermino, 0, 2);
+        panelsecconf.add(v1,3,0);
     }
     @FXML
     private void ediMateriaParalelo(){
