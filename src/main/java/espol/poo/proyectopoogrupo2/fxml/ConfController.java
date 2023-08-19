@@ -98,8 +98,10 @@ public class ConfController implements Initializable {
         panelsecconf.getChildren().clear();
         visualizartermino();
         Button inTermino=new Button("Ingresar término");
+        VBox v1=new VBox(5); 
         inTermino.setOnAction(e->{
-            VBox v1=new VBox(5); 
+            v1.getChildren().clear();
+            //VBox v2=new VBox(5); 
             TextField t1=new TextField();
             t1.setPromptText("Año");
             TextField t2=new TextField();
@@ -143,10 +145,50 @@ public class ConfController implements Initializable {
                     
                 }
             });
+            //v2.getChildren().addAll(t1,t2,aplicar);
             v1.getChildren().addAll(t1,t2,aplicar);
-            panelsecconf.add(v1,1,0);
+            panelsecconf.add(v1,3,0);
         });
+        
+        
         Button ediTermino=new Button("Editar término");
+        ediTermino.setOnAction(i ->{
+            v1.getChildren().clear();
+            //VBox v2 = new VBox(5);
+            ArrayList<TerminoAcademico> terminos = TerminoAcademico.cargarTerminos(".\\archivos\\TerminosAcademicos.txt");
+            ComboBox<TerminoAcademico> cajita = new ComboBox<>();
+            cajita.getItems().addAll(terminos);
+            cajita.setPromptText("Escoja un Termino");
+            cajita.setOnAction(j->{
+               TerminoAcademico leer = (TerminoAcademico) cajita.getValue();
+               TerminoAcademico cambiar = TerminoAcademico.busqueda(terminos, leer);
+               int indice = terminos.indexOf(cambiar);
+               ComboBox<String> cajita1 = new ComboBox<>();
+               cajita1.getItems().setAll("Año","Numero de termino");
+               cajita1.setPromptText("Escoja una opcion");
+               cajita1.setOnAction(r -> {
+                   String lectura = (String) cajita1.getValue();
+                   TextField newC = new TextField();
+                   Button bt = new Button("Aplicar");
+                   if(lectura.equals("Año")){
+                       newC.setPromptText(cambiar.getAnio());
+                   }else{
+                       newC.setPromptText(cambiar.getNumero());
+                   }
+                   
+                v1.getChildren().addAll(newC,bt);
+               });
+                v1.getChildren().add(cajita1);
+            });
+            v1.getChildren().add(cajita);
+            
+         panelsecconf.add(v1,3,0);
+        }
+        );
+        
+        
+        
+        
         Button confTermino=new Button("Configurar término");
         inTermino.setWrapText(true);
         ediTermino.setWrapText(true);
