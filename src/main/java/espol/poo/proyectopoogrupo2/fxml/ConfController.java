@@ -253,11 +253,78 @@ public class ConfController implements Initializable {
         panelsecconf.add(ediMateria, 0, 1);
         panelsecconf.add(agParalelo, 0, 2);
         panelsecconf.add(elimParalelo, 0, 3);
+        inMateria.setOnAction(f->{
+            Button aplicar1=new Button("Aplicar");
+            TextField inCodigo=new TextField();
+            inCodigo.setPromptText("Código");  
+            String cod_Materia=inCodigo.getText();
+            TextField inNombre=new TextField();
+            String nomb_Materia=inNombre.getText();
+            inNombre.setPromptText("Nombre");
+            TextField inNiveles=new TextField();
+            inNiveles.setPromptText("Cantidad de niveles");
+            String niveles_Pregunta=inNiveles.getText();
+            //int niveles_preguntas=Integer.parseInt(niveles_Pregunta); no se necesiten los niveles convertido en int
+            VBox b2=new VBox(4);
+            b2.getChildren().addAll(inCodigo,inNombre,inNiveles,aplicar1);
+            panelsecconf.add(b2, 1, 0);       
+            
+        });
+        ediMateria.setOnAction(a->{
+            ArrayList<Materia>materias2=NewClass.leerMaterias(".\\archivos\\materias.txt");
+            Button aplicar2=new Button("Aplicar");
+            TextField ediCodigo = new TextField();
+            String ediCod=ediCodigo.getText();
+            ediCodigo.setPromptText("Código");
+            ComboBox<Materia> cajita2=new ComboBox<>();
+            cajita2.getItems().setAll(materias2);
+            cajita2.setPromptText("Escoja una materia");
+            VBox b3=new VBox(3);
+            b3.getChildren().addAll(ediCodigo,cajita2,aplicar2);
+            panelsecconf.add(b3, 1, 1);                     
+        });
+        agParalelo.setOnAction(b->{
+            ArrayList<Materia>materias1=NewClass.leerMaterias(".\\archivos\\materias.txt");
+            ArrayList<TerminoAcademico> terminos1 = TerminoAcademico.cargarTerminos(".\\archivos\\TerminosAcademicos.txt");
+            Button aplicar3=new Button("Aplicar");
+            TextField numParalelo = new TextField();
+            String num_Paralelo=numParalelo.getText();
+            numParalelo.setPromptText("Número del paralelo");
+            ComboBox<Materia> cajita3=new ComboBox<>();
+            cajita3.getItems().setAll(materias1);  
+            cajita3.setPromptText("Escoja una materia");                        
+            ComboBox<TerminoAcademico> cajita4=new ComboBox<>();
+            cajita4.getItems().setAll(terminos1);
+            cajita4.setPromptText("Escoja un término académico");
+            VBox b4=new VBox(4);
+            b4.getChildren().addAll(cajita3,cajita4,numParalelo,aplicar3);
+            panelsecconf.add(b4, 1, 2); 
+        });
+        elimParalelo.setOnAction(c->{
+            Button aplicar4=new Button("Aplicar");
+            ComboBox<String> cajita5=new ComboBox<>();
+            cajita5.setPromptText("Escoja un paralelo");
+            VBox b5=new VBox(2);
+            b5.getChildren().addAll(cajita5,aplicar4);
+            panelsecconf.add(b5, 1, 3);
+        });
     }
+    /*
+    Codigó que iria entre las líneas 279 y 280: es para desactivar la caja de texto si se selecciona 
+    el ComboBox y viceversa pero me permitía mostrar las opciones en el programa, por eso lo comenté
+    no sé que este mal planteado
+            cajita2.setOnAction(j->{
+                if(cajita2.getSelectionModel().getSelectedItem()!= null){
+                ediCodigo.setDisable(true);
+                }else{
+                    ediCodigo.setDisable(false);
+                }
+            });
+    */
     @FXML
     private void adPreguntas(){
         panelsecconf.getChildren().clear();
-        ArrayList<Materia>materias=NewClass.leerMaterias(".\\archivos\\materias.txt");;
+        ArrayList<Materia>materias=NewClass.leerMaterias(".\\archivos\\materias.txt");
         ComboBox<Materia> preguntas=new ComboBox<>();
         preguntas.getItems().setAll(materias);
         preguntas.setPromptText("Escoja una Materia");
@@ -266,6 +333,30 @@ public class ConfController implements Initializable {
         panelsecconf.add(preguntas, 0, 0);
         panelsecconf.add(agPregunta, 0, 1);
         panelsecconf.add(elimPregunta, 0, 2);
+        agPregunta.setOnAction(d->{
+            Button agregar=new Button("Agregar");
+            TextField enunciadoP=new TextField();
+            String newEnunciado=enunciadoP.getText();
+            enunciadoP.setPromptText("Enunciado de la pregunta");
+            TextField nivelP=new TextField();
+            String nivelDeP=nivelP.getText();
+            nivelP.setPromptText("Nivel de la pregunta");
+            TextField respuestaC=new TextField();
+            String respuestaCorrecta=respuestaC.getText();
+            respuestaC.setPromptText("Respuesta correcta");
+            TextField respuestaPos1=new TextField();
+            String respuestaPosible1=respuestaPos1.getText();
+            respuestaPos1.setPromptText("Posible respuesta 1");
+            TextField respuestaPos2=new TextField();
+            String respuestaPosible2=respuestaPos2.getText();
+            respuestaPos2.setPromptText("Posible respuesta 2");
+            TextField respuestaPos3=new TextField();
+            String respuestaPosible3=respuestaPos3.getText();
+            respuestaPos3.setPromptText("Posible respuesta 3");            
+            VBox b6=new VBox(7);   
+            b6.getChildren().addAll(enunciadoP,nivelP,respuestaC,respuestaPos1,respuestaPos2,respuestaPos3,agregar);
+            panelsecconf.add(b6,1,1);
+        });
     }
     
     
@@ -277,6 +368,9 @@ public class ConfController implements Initializable {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+    
+   
+    
     
     
 }
