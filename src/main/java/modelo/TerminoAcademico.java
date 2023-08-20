@@ -5,11 +5,14 @@
 package modelo;
 import java.util.ArrayList;
 import java.io.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 /**
  *
  * @author Daniela Basilio
  */
-public class TerminoAcademico {
+public class TerminoAcademico implements Comparable<TerminoAcademico>{
   private String anio;
   private String numero;
 
@@ -40,6 +43,31 @@ public class TerminoAcademico {
   public void setNumero(String numero){
     this.numero = numero;
   }
+  
+  @Override
+  public int compareTo(TerminoAcademico t){
+      int a = Integer.parseInt(this.anio);
+      int n = Integer.parseInt(this.numero);
+      int r;
+      if(a<Integer.parseInt(t.anio)){
+          r = -1;
+      }
+      else if(a>Integer.parseInt(t.anio)){
+          r = 1;
+      }
+      else{
+          if(n<Integer.parseInt(t.numero)){
+          r = -1;
+      }
+      else if(n>Integer.parseInt(t.numero)){
+          r = 1;
+      }
+      else{
+          r=0;
+      }
+      }
+    return r;  
+  }
   //Lectura y uso de ArrayList de terminos de consulta y configuración de término
   public static ArrayList<TerminoAcademico> cargarTerminos(String ruta){
     ArrayList<TerminoAcademico> terminos = new ArrayList<>();
@@ -55,6 +83,7 @@ public class TerminoAcademico {
     catch(IOException e){
       e.printStackTrace();
     }
+    Collections.sort(terminos);
     return terminos;
   }
   //Para validar clases
@@ -89,11 +118,20 @@ public class TerminoAcademico {
   //NOTA: utilizar cuando se actualice la lista de terminos académicos con alguna modificación
   public static void actualizarTermino(String ruta, ArrayList<TerminoAcademico> t){
     //FileWriter no recibe un true por lo que elimina el contenido y lo vuelve a agregar
+    ArrayList<String> terminosString = new ArrayList<>();
+    Collections.sort(t);
+    for(TerminoAcademico ter: t){
+        terminosString.add(ter.toString());
+    }
+    Set<String> hasSet = new HashSet<>(terminosString);
+    terminosString.clear();
+    terminosString.addAll(hasSet);
     try(BufferedWriter write = new BufferedWriter(new FileWriter(ruta))){
         write.write("ANIO-NUMERO");
         write.write("\n");
-        for(TerminoAcademico ter: t){
-        write.write(ter.anio + "-" + ter.numero);
+        for(String termino: terminosString){
+        String[] term = termino.split("-");
+        write.write(term[2] + "-" + term[1]);
         write.write("\n");
       }
 
