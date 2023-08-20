@@ -193,6 +193,9 @@ public class ConfController implements Initializable {
                               cambiar.setAnio(leido);
                               terminos.set(indice, cambiar);
                               TerminoAcademico.actualizarTermino(".\\archivos\\TerminosAcademicos.txt", terminos);
+                              visualizartermino();
+                              mostrarAlerta(Alert.AlertType.INFORMATION, "¡Actualización exitosa!");
+                              v1.getChildren().clear();
                               }
                               break;
                           case "Numero de termino":
@@ -201,12 +204,10 @@ public class ConfController implements Initializable {
                               }else{
                                 cambiar.setNumero(leido); 
                                 terminos.set(indice, cambiar);
-            
-                                Set<TerminoAcademico> hasSet = new HashSet<>(terminos);
-                                terminos.clear();
-                                terminos.addAll(hasSet);
                                 TerminoAcademico.actualizarTermino(".\\archivos\\TerminosAcademicos.txt", terminos);
- 
+                                visualizartermino();
+                                mostrarAlerta(Alert.AlertType.INFORMATION, "¡Actualización exitosa!");
+                                v1.getChildren().clear();
                               }
                               break;
                       }
