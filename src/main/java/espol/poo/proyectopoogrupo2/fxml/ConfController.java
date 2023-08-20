@@ -97,6 +97,7 @@ public class ConfController implements Initializable {
     private void aTermino(){
         panelsecconf.getChildren().clear();
         visualizartermino();
+        //Boton para ingresar término
         Button inTermino=new Button("Ingresar término");
         VBox v1=new VBox(5); 
         inTermino.setOnAction(e->{
@@ -150,7 +151,7 @@ public class ConfController implements Initializable {
             //panelsecconf.add(v1,3,0);
         });
         
-        
+        //Creación de boton para editar término
         Button ediTermino=new Button("Editar término");
         ediTermino.setOnAction(i ->{
             v1.getChildren().clear();
@@ -160,6 +161,7 @@ public class ConfController implements Initializable {
             cajita.getItems().addAll(terminos);
             cajita.setPromptText("Escoja un Termino");
             cajita.setOnAction(j->{
+                //v1.getChildren().clear();
                TerminoAcademico leer = (TerminoAcademico) cajita.getValue();
                TerminoAcademico cambiar = TerminoAcademico.busqueda(terminos, leer);
                int indice = terminos.indexOf(cambiar);
@@ -167,6 +169,7 @@ public class ConfController implements Initializable {
                cajita1.getItems().setAll("Año","Numero de termino");
                cajita1.setPromptText("Escoja una opcion");
                cajita1.setOnAction(r -> {
+                   //v1.getChildren().clear();
                    String lectura = (String) cajita1.getValue();
                    TextField newC = new TextField();
                    Button bt = new Button("Aplicar");
