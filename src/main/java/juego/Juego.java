@@ -29,7 +29,7 @@ public class Juego{
   private ArrayList<String> ComodinesUsados;
   private String premio;
   
-// que quieres hacer aquí para ayudarte : mira crea elk constructor con esos atributos y crea uno solo con un atributo arrayListString mejor ok ( 
+// que quieres hacer aquí para ayudarte : mira crea el constructor con esos atributos y crea uno solo con un atributo arrayListString mejor ok ( 
   public Juego(String m, int num, Estudiante participante, Estudiante companero, ArrayList<Pregunta> preguntas){
     this.materia=m;
     this.numParalelo=num;
