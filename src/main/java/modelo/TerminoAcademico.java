@@ -10,7 +10,7 @@ import java.io.*;
  * @author Daniela Basilio
  */
 public class TerminoAcademico {
-    private String anio;
+  private String anio;
   private String numero;
 
   //Constructor
@@ -90,7 +90,9 @@ public class TerminoAcademico {
   public static void actualizarTermino(String ruta, ArrayList<TerminoAcademico> t){
     //FileWriter no recibe un true por lo que elimina el contenido y lo vuelve a agregar
     try(BufferedWriter write = new BufferedWriter(new FileWriter(ruta))){
-      for(TerminoAcademico ter: t){
+        write.write("ANIO-NUMERO");
+        write.write("\n");
+        for(TerminoAcademico ter: t){
         write.write(ter.anio + "-" + ter.numero);
         write.write("\n");
       }
