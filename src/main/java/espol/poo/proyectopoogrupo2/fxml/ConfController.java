@@ -116,7 +116,7 @@ public class ConfController implements Initializable {
                 int numero=Integer.parseInt(n);
                 int a=Integer.parseInt(anio);
                 boolean terminoExiste = TerminoAcademico.cargarTerminosString(".\\archivos\\TerminosAcademicos.txt").contains((new TerminoAcademico(anio,n)).toString());
-                if(numero>2 || a<2023 || numero==0 || terminoExiste){
+                if(numero>2 || a<2023 || numero<=0 || terminoExiste){
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Resultado de operacion");
                     alert.setHeaderText("Notificacion");
@@ -161,15 +161,16 @@ public class ConfController implements Initializable {
             cajita.getItems().addAll(terminos);
             cajita.setPromptText("Escoja un Termino");
             cajita.setOnAction(j->{
+               cajita.setDisable(true);
                 //v1.getChildren().clear();
-               TerminoAcademico leer = (TerminoAcademico) cajita.getValue();
-               TerminoAcademico cambiar = TerminoAcademico.busqueda(terminos, leer);
+               //TerminoAcademico leer = (TerminoAcademico) cajita.getValue();
+               TerminoAcademico cambiar = TerminoAcademico.busqueda(terminos, (TerminoAcademico) cajita.getValue());
                int indice = terminos.indexOf(cambiar);
                ComboBox<String> cajita1 = new ComboBox<>();
                cajita1.getItems().setAll("Año","Numero de termino");
                cajita1.setPromptText("Escoja una opcion");
                cajita1.setOnAction(r -> {
-                   //v1.getChildren().clear();
+                   cajita1.setDisable(true);
                    String lectura = (String) cajita1.getValue();
                    TextField newC = new TextField();
                    Button bt = new Button("Aplicar");
@@ -178,14 +179,46 @@ public class ConfController implements Initializable {
                    }else{
                        newC.setPromptText(cambiar.getNumero());
                    }
+                   bt.setOnAction(k ->{
+                      try{
+                          String leido = newC.getText();
+                          int numero = Integer.parseInt(leido);
+                          switch(lectura){
+                          case "Año":
+                              if(numero<2023){
+                                  mostrarAlerta(Alert.AlertType.INFORMATION, "Debe ingresar un numero mayor o igual al actual (2023)");
+                              }else{
+                              cambiar.setAnio(leido);
+                              terminos.set(indice, cambiar);
+                              TerminoAcademico.actualizarTermino(".\\archivos\\TerminosAcademicos.txt", terminos);
+                              }
+                              break;
+                          case "Numero de termino":
+                              
+                              if(numero<=0 || numero>2){
+                              }else{
+                                cambiar.setNumero(leido); 
+                                terminos.set(indice, cambiar);
+                                TerminoAcademico.actualizarTermino(".\\archivos\\TerminosAcademicos.txt", terminos);
+ 
+                              }
+                              break;
+                      }
+                      }catch(NumberFormatException nfe){
+                      mostrarAlerta(Alert.AlertType.INFORMATION, "INGRESO DE DATOS ERRONEO");
+                      newC.setText("");
+                      }
+                   
+                   
+                   });
+                   
                    
                 v1.getChildren().addAll(newC,bt);
                });
                 v1.getChildren().add(cajita1);
             });
             v1.getChildren().add(cajita);
-            
-         //panelsecconf.add(v1,3,1);
+
         }
         );
         
