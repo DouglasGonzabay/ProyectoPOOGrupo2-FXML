@@ -7,7 +7,9 @@ package espol.poo.proyectopoogrupo2.fxml;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -199,6 +201,10 @@ public class ConfController implements Initializable {
                               }else{
                                 cambiar.setNumero(leido); 
                                 terminos.set(indice, cambiar);
+            
+                                Set<TerminoAcademico> hasSet = new HashSet<>(terminos);
+                                terminos.clear();
+                                terminos.addAll(hasSet);
                                 TerminoAcademico.actualizarTermino(".\\archivos\\TerminosAcademicos.txt", terminos);
  
                               }
