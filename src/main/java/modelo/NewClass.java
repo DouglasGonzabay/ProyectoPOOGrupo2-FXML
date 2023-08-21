@@ -133,6 +133,14 @@ public class NewClass {
                 
             }
         }
+        //Método de actualización de datos en nombre de archivos (comprobación de funcionamiento)
+        System.out.println("\n\n");
+        File carpeta = new File(".\\archivos");
+        if(carpeta.isDirectory()){
+            for(String e: carpeta.list()){
+                System.out.println(e);
+            }
+        }
    
     }
 }
