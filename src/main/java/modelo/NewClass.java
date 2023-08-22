@@ -175,6 +175,36 @@ public class NewClass {
         }
         
     }
+    //Método para reemplaza el término en el nombre del paralelo que lo contenga
+    public static void reemplazarEnParalelo(String año, String numero, int cambio){
+        File carpeta = new File(".\\archivos");
+        if(carpeta.isDirectory()){
+            for(String e: carpeta.list()){
+                if(e.contains(".csv")){
+                String[] s = e.split("-");
+                if(s.length == 4){
+                    if(año.equals(s[2])&&(numero+".csv").equals(s[3])){
+                        File oldname = new File(".\\archivos\\"+e);
+                        File newName;
+                        if(cambio==1 || cambio==2){
+                            newName = new File(".\\archivos\\"+s[0]+"-"+s[1]+"-"+s[2]+"-"+cambio+".csv");
+                            oldname.renameTo(newName);
+                        }else{
+                            newName = new File(".\\archivos\\"+s[0]+"-"+s[1]+"-"+cambio+"-"+s[3]);
+                            oldname.renameTo(newName);
+                        }
+                    }
+                }
+                else{
+                    System.out.println("No existen archivos para actualizar");
+                }
+                }else{
+                    System.out.println("No existen archivos para actualizar");
+                }
+            }
+            
+        }
+    }
 
     public static void main(String[] arr){
         //Comprobación de métodos
@@ -204,8 +234,19 @@ public class NewClass {
                 System.out.println(e);
             }
         }*/
-        NewClass.reemplazarTermino(".\\archivos\\materias.txt", "2023", "2", 1);
-        
-   
+        //NewClass.reemplazarTermino(".\\archivos\\materias.txt", "2023", "2", 1);
+        //NewClass.reemplazarEnParalelo("2024", "2", 2023);
+        /*
+        System.out.println("\n\n");
+        File carpeta = new File(".\\archivos");
+        if(carpeta.isDirectory()){
+            for(String e: carpeta.list()){
+                if(e.contains(".csv")){
+                    String[] par = e.split("-");
+                    System.out.println(par[3]);
+
+                }
+            }
+        }*/
     }
 }
