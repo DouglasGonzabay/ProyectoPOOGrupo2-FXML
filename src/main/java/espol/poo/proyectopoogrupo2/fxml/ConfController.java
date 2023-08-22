@@ -191,6 +191,7 @@ public class ConfController implements Initializable {
                                   mostrarAlerta(Alert.AlertType.INFORMATION, "Debe ingresar un numero mayor o igual al actual (2023)");
                               }else{
                               //Método para cambiar termino académico a todos los paralelos que contengan la versión anterior
+                              NewClass.reemplazarEnParalelo(cambiar.getAnio(), cambiar.getNumero(), numero);
                               NewClass.reemplazarTermino(".\\archivos\\materias.txt", cambiar.getAnio(), cambiar.getNumero(), numero);
                               cambiar.setAnio(leido);
                               terminos.set(indice, cambiar);
@@ -206,6 +207,7 @@ public class ConfController implements Initializable {
                               if(numero<=0 || numero>2){
                                   mostrarAlerta(Alert.AlertType.INFORMATION, "Debe ingresar un numero entre 1 y 2");
                               }else{
+                                NewClass.reemplazarEnParalelo(cambiar.getAnio(), cambiar.getNumero(), numero);
                                 NewClass.reemplazarTermino(".\\archivos\\materias.txt", cambiar.getAnio(), cambiar.getNumero(), numero);
                                 cambiar.setNumero(leido); 
                                 terminos.set(indice, cambiar);
