@@ -10,15 +10,18 @@ package modelo;
  * @author User
  */
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import modelo.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 public class NewClass {
     public static ArrayList<String> presentarMaterias (String ruta){
         ArrayList<String> materias = new ArrayList<>() ;
@@ -113,9 +116,69 @@ public class NewClass {
         }
         return materias;
     }
+    //Método creado para reemplazar termino académico del archivo materias.txt
+    public static void reemplazarTermino(String ruta, String año, String numero, int cambio){
+        ArrayList<String> reescritura = new ArrayList<>();
+        try(BufferedReader d = new BufferedReader(new FileReader(ruta))){
+            String linea = d.readLine();
+            reescritura.add(linea);
+            while((linea = d.readLine())!=null){
+                String[] es = linea.split("/");
+                if(es.length==3){
+                    reescritura.add(linea);
+                }
+                else{
+                    String[] par = es[3].split(",");
+                    String newesc = es[0]+"/"+es[1]+"/"+es[2]+"/";
+                    for(String p: par){
+                        String[] var = p.split("-");
+                        if((año.equals(var[1]))&&(numero.equals(var[2]))){
+                            if(Arrays.asList(par).indexOf(p)<(par.length -1 )){
+                                if(cambio==1 || cambio==2){
+                                    newesc = newesc + var[0]+"-"+var[1]+"-"+cambio+",";
+                                }
+                                else{
+                                    newesc = newesc + var[0]+"-"+cambio+"-"+var[2]+",";
+                                }
+                            }
+                            else{
+                                if(cambio==1 || cambio==2){
+                                    newesc = newesc + var[0]+"-"+var[1]+"-"+cambio;
+                                }
+                                else{
+                                    newesc = newesc + var[0]+"-"+cambio+"-"+var[2];
+                                }
+                            }
+                        }
+                        else{
+                            if(Arrays.asList(par).indexOf(p)<(par.length -1 )){
+                                newesc = newesc + var[0]+"-"+var[1]+"-"+var[2]+",";
+                            }
+                            else{
+                                newesc = newesc + var[0]+"-"+var[1]+"-"+var[2];
+                            }
+                        } 
+                    }
+                    reescritura.add(newesc);
+                }
+            }
+        }catch(IOException e){
+            System.out.print(e);
+        }
+        try(BufferedWriter w = new BufferedWriter(new FileWriter(ruta))){
+            for(String r: reescritura){
+                w.write(r);
+                w.write("\n");
+            }
+        }catch(IOException io){
+            System.out.println(io);
+        }
+        
+    }
 
     public static void main(String[] arr){
         //Comprobación de métodos
+        /*
         ArrayList<String> materias =NewClass.presentarMaterias(".\\archivos\\materias.txt");
         for(String m: materias){
             System.out.println(m);
@@ -140,7 +203,9 @@ public class NewClass {
             for(String e: carpeta.list()){
                 System.out.println(e);
             }
-        }
+        }*/
+        NewClass.reemplazarTermino(".\\archivos\\materias.txt", "2023", "2", 1);
+        
    
     }
 }
