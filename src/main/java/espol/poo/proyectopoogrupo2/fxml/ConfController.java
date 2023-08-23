@@ -241,6 +241,17 @@ public class ConfController implements Initializable {
         
         
         Button confTermino=new Button("Configurar término");
+        confTermino.setOnAction(eff->{
+            v1.getChildren().clear();
+            ArrayList<TerminoAcademico> terminos = TerminoAcademico.cargarTerminos(".\\archivos\\TerminosAcademicos.txt");
+            ComboBox<TerminoAcademico> eleccion = new ComboBox<>();
+            eleccion.getItems().addAll(terminos);
+            eleccion.setOnAction(elec->{
+                //Escribe en un archivo txt un unico termino configurado
+                NewClass.configuracionJuego((TerminoAcademico)eleccion.getValue());
+            });
+            v1.getChildren().add(eleccion);
+        });
         inTermino.setWrapText(true);
         ediTermino.setWrapText(true);
         confTermino.setWrapText(true);
