@@ -272,6 +272,7 @@ public class ConfController implements Initializable {
         panelsecconf.add(ediMateria, 0, 1);
         panelsecconf.add(agParalelo, 0, 2);
         panelsecconf.add(elimParalelo, 0, 3);
+        VBox v2=new VBox(5); 
         inMateria.setOnAction(f->{
             Button aplicar1=new Button("Aplicar");
             TextField inCodigo=new TextField();
@@ -286,8 +287,7 @@ public class ConfController implements Initializable {
             //int niveles_preguntas=Integer.parseInt(niveles_Pregunta); no se necesiten los niveles convertido en int
             VBox b2=new VBox(4);
             b2.getChildren().addAll(inCodigo,inNombre,inNiveles,aplicar1);
-            panelsecconf.add(b2, 1, 0);       
-            
+            panelsecconf.add(b2, 1, 0);
         });
         ediMateria.setOnAction(a->{
             ArrayList<Materia>materias2=NewClass.leerMaterias(".\\archivos\\materias.txt");
