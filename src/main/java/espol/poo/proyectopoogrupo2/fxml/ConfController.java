@@ -277,7 +277,7 @@ public class ConfController implements Initializable {
             Button aplicar1=new Button("Aplicar");
             TextField inCodigo=new TextField();
             inCodigo.setPromptText("Código");  
-            String cod_Materia=inCodigo.getText();
+            String cod_Maeria=inCodigo.getText();
             TextField inNombre=new TextField();
             String nomb_Materia=inNombre.getText();
             inNombre.setPromptText("Nombre");
