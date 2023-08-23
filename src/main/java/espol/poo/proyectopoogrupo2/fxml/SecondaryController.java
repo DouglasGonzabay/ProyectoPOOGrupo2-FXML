@@ -24,6 +24,7 @@ import modelo.Estudiante;
 import modelo.Materia;
 import modelo.NewClass;
 import modelo.Paralelo;
+import modelo.TerminoAcademico;
 /**
  * FXML Controller class
  *
@@ -80,7 +81,14 @@ public class SecondaryController implements Initializable {
     private void modParalelo(ActionEvent event){
         slparalelo.setDisable(false);
         ArrayList<Paralelo> par = (ArrayList<Paralelo>)slmateria.getValue().getParalelos();
-        slparalelo.getItems().setAll(par);
+        TerminoAcademico terJuego = NewClass.terminoConfigurado();
+        ArrayList<Paralelo> filtrado = new ArrayList<>();
+        for(Paralelo p: par){
+            if(terJuego.toString().equals(p.getTermino().toString())){
+                filtrado.add(p);
+            }
+        }
+        slparalelo.getItems().setAll(filtrado);
         //Borra la lista de estudiantes para evitar que se realice una selección erronea
         scrollEstudiante.getChildren().clear();
         scrollCompanero.getChildren().clear();
