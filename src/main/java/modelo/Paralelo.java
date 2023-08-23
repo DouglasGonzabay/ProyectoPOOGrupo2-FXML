@@ -34,7 +34,9 @@ public class Paralelo {
 
   
 
-  //public TerminoAcademico
+  public TerminoAcademico getTermino(){
+      return termino;
+  }
 
   public int getNumParalelo(){
     return numeroParalelo;
