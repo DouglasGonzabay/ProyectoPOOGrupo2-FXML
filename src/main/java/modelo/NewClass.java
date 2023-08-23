@@ -205,6 +205,31 @@ public class NewClass {
             
         }
     }
+    //Guarda en un documento un único término configurado
+    public static void configuracionJuego(TerminoAcademico t){
+        try(BufferedWriter j = new BufferedWriter(new FileWriter(".\\archivos\\configuracionTermino.txt"))){
+            j.write(t.getAnio()+"-"+t.getNumero());
+        }catch(IOException io){
+            System.out.println(io);
+        }
+    }
+    public static TerminoAcademico terminoConfigurado(){
+        TerminoAcademico t = new TerminoAcademico("","");
+        try(BufferedReader br = new BufferedReader(new FileReader(".\\archivos\\configuracionTermino.txt"))){
+            String read;
+            while((read=br.readLine())!=null){
+                String[] ter = read.split("-");
+                t = new TerminoAcademico(ter[0],ter[1]);
+                //t.setAnio(ter[0]);
+                //t.setAnio(ter[1]);
+            }
+        }catch(FileNotFoundException exo){
+            t = new TerminoAcademico("","");
+        }catch(IOException ioe){
+            t = new TerminoAcademico("","");
+        }
+        return t;
+    }
 
     public static void main(String[] arr){
         //Comprobación de métodos
@@ -248,5 +273,7 @@ public class NewClass {
                 }
             }
         }*/
+       //ArrayList<Materia> materias = NewClass.leerMaterias(".\\archivos\\materias.txt");
+       
     }
 }
