@@ -230,6 +230,60 @@ public class NewClass {
         }
         return t;
     }
+    //Clase para editar cantidad de niveles o nombre de la materia
+    public static void editarMateria(String ruta,String codigo, String nuevo){
+        ArrayList<String> materiasRegistradas = new ArrayList<>();
+        try(BufferedReader bbb = new BufferedReader(new FileReader(ruta))){
+            String read = bbb.readLine();
+            materiasRegistradas.add(read);
+            while((read=bbb.readLine())!=null){
+                String[] cc = read.split("/");
+                if(cc[1].equals(codigo)){
+                    String agregarMod;
+                    //El valor nuevo es un numero y la materia contiene paralelos
+                   if(isNumeric(nuevo)&&(cc.length==4)){
+                        agregarMod = cc[0]+"/"+cc[1]+"/"+nuevo+"/"+cc[3];
+                   }
+                   //El valor nuevo no es un numero y la materia no contiene paralelos
+                   else if((!isNumeric(nuevo))&&(cc.length==4)){
+                       agregarMod = nuevo + "/" + cc[1] + "/" + cc[2]+"/"+cc[3];
+                   }
+                   //El valor nuevo es un numero y la materia no contiene paralelos
+                   else if(isNumeric(nuevo)&&(cc.length!=4)){
+                       agregarMod = cc[0]+"/"+cc[1]+"/"+nuevo;
+                   }
+                   else{
+                       agregarMod = nuevo + "/" + cc[1] + "/" + cc[2];
+                   }
+                   materiasRegistradas.add(agregarMod);
+                }else{
+                    materiasRegistradas.add(read);
+                }
+            }
+        }catch(IOException ioe){
+            System.out.println(ioe);
+        }
+        try(BufferedWriter wr = new BufferedWriter(new FileWriter(ruta))){
+            for(String a: materiasRegistradas){
+                wr.write(a);
+                wr.write("\n");
+            }
+        }catch(IOException oi){
+            System.out.println(oi);
+        }
+    }
+    //Comprobar si es un numero
+     public static boolean isNumeric(String s)
+    {
+        try {
+            Integer.parseInt(s);
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+        return true;
+    }
+     
+     
 
     public static void main(String[] arr){
         //Comprobación de métodos
