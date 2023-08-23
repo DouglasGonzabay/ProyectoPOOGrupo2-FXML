@@ -282,8 +282,98 @@ public class NewClass {
         }
         return true;
     }
-     
-     
+     //Método para escribir en materia.txt
+     public static void agregarMateria(String ruta, String nombre, String codigo, String nivel){
+         try(BufferedWriter wb = new BufferedWriter(new FileWriter(ruta,true))){
+             wb.write(nombre+"/"+codigo+"/"+nivel);
+             wb.write("\n");
+         }catch(IOException on){
+             System.out.println(on);
+         }
+     }
+     //Agregar paralelo con las caracteristicas seleccionadas
+     public static void agregarParalelo(String ruta, String nombreMateria, int numParalelo, String anio, String termino){
+         ArrayList<String> contenidoArchivo = new ArrayList<>();
+         try(BufferedReader wb = new BufferedReader(new FileReader(ruta))){
+             String leer = wb.readLine();
+             contenidoArchivo.add(leer);
+             while((leer=wb.readLine())!=null){
+                 String[] el = leer.split("/");
+                 if(el[0].equals(nombreMateria)){
+                     String nuevo;
+                     if(el.length == 3){
+                         if(numParalelo<10){
+                             nuevo = el[0]+"/"+el[1]+"/"+el[2]+"/"+"P0"+ numParalelo+"-"+anio+"-"+termino;
+                         }else{
+                             nuevo = el[0]+"/"+el[1]+"/"+el[2]+"/"+"P"+ numParalelo;
+                         }
+                     }else{
+                         if(numParalelo<10){
+                             nuevo = el[0]+"/"+el[1]+"/"+el[2]+"/"+el[3]+",P0"+ numParalelo+"-"+anio+"-"+termino;
+                         }else{
+                             nuevo = el[0]+"/"+el[1]+"/"+el[2]+"/"+el[3]+",P"+ numParalelo;
+                         }
+                     }
+                     contenidoArchivo.add(nuevo);
+                 }else{
+                     contenidoArchivo.add(leer);
+                 }
+             }
+         }catch(IOException eio){
+             System.out.println(eio);
+         }
+         try(BufferedWriter bufff = new BufferedWriter(new FileWriter(ruta))){
+             for(String n: contenidoArchivo){
+                 bufff.write(n);
+                 bufff.write("\n");
+             }
+         }catch(IOException eoi){
+             System.out.println(eoi);
+         }
+         
+     }
+     //Eliminar un paralelo de la materia 
+     public static void eliminarParalelo(String ruta, String materia, Paralelo p){
+         ArrayList<String> lectura = new ArrayList<>();
+         try(BufferedReader r = new BufferedReader(new FileReader(ruta))){
+             String l = r.readLine();
+             lectura.add(l);
+             while((l=r.readLine())!=null){
+                 String[] a = l.split("/");
+                 if(materia.equals(a[0])){
+                     String leido = a[0]+"/"+a[1]+"/"+a[2];
+                     
+                     if(a.length==4){
+                         ArrayList<String> s = new ArrayList<>();
+                         String[] pa = a[3].split(",");
+                         for(String e: pa){
+                             String[] at = e.split("-");
+                             
+                             if(!(at[0]+"-"+"PAO"+"-"+at[2]+"-"+at[1]).equals(p.toString())){
+                                 s.add(e);
+                             }
+                         }
+                         if(!s.isEmpty()){
+                             leido = leido +"/"+String.join(",",s);
+                         }
+                     }
+                     lectura.add(leido);
+                 }else{
+                     lectura.add(l);
+                 }
+             }
+         }catch(IOException d){
+             System.out.println(d);
+         }
+         try(BufferedWriter bufff = new BufferedWriter(new FileWriter(ruta))){
+             for(String n: lectura){
+                 bufff.write(n);
+                 bufff.write("\n");
+             }
+         }catch(IOException eoi){
+             System.out.println(eoi);
+         }
+     }
 
     public static void main(String[] arr){
         //Comprobación de métodos
@@ -328,6 +418,7 @@ public class NewClass {
             }
         }*/
        //ArrayList<Materia> materias = NewClass.leerMaterias(".\\archivos\\materias.txt");
+       eliminarParalelo(".\\archivos\\materias.txt", "FP", new Paralelo(3,new TerminoAcademico("2025","1")));
        
     }
 }
