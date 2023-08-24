@@ -336,6 +336,7 @@ public class ConfController implements Initializable {
                 ingresoM.setText("");
                 ingresoN.setText("");
                 mostrarAlerta(Alert.AlertType.INFORMATION, "INGRESO DE DATOS CORRECTOS");
+                visualizar();
                 v2.getChildren().clear();
                 });
             });
@@ -385,6 +386,7 @@ public class ConfController implements Initializable {
                         v2.getChildren().addAll(carga,hbC);
                         FileChooser fileelegido = new FileChooser();
                         si.setOnAction(sib->{
+                            numParalelo.setDisable(true);
                             Window ventanaEmergente = si.getScene().getWindow();
                             File selectedFile = fileelegido.showOpenDialog(ventanaEmergente);
                             if (selectedFile != null) {
@@ -398,42 +400,62 @@ public class ConfController implements Initializable {
                                 }
                             }
                         v2.getChildren().clear();
+                        visualizar();
                         });
                         no.setOnAction(nob->{
                            mostrarAlerta(Alert.AlertType.INFORMATION, "RECUERDE CARGAR EL ARCHIVO LUEGO EN LA SIGUIENTE\n RUTA: .\\archivos");
                            v2.getChildren().clear();
+                           visualizar();
                         
                         });
-                        
 
                     });
                 
                 });
-                
-                
-                
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+  
             });
                                    
             
             v2.getChildren().add(cajita3);
         });
+        
+        
+        
+        
         elimParalelo.setOnAction(c->{
             v2.getChildren().clear();
-            Button aplicar4=new Button("Aplicar");
-            ComboBox<String> cajita5=new ComboBox<>();
-            cajita5.setPromptText("Escoja un paralelo");
-            //VBox b5=new VBox(2);
-            v2.getChildren().addAll(cajita5,aplicar4);
+            ArrayList<Materia>materias2=NewClass.leerMaterias(".\\archivos\\materias.txt");
+            ComboBox<Materia> cajita5=new ComboBox<>();
+            cajita5.getItems().setAll(materias2);
+            cajita5.setPromptText("Escoja una materia");
+            cajita5.setOnAction(pl->{
+               cajita5.setDisable(true);
+               Materia seleccionado = (Materia) cajita5.getValue();
+               String nombreM = seleccionado.getNombre();
+               ArrayList<Paralelo> paraleloss = seleccionado.getParalelos();
+               ComboBox<Paralelo> cajita6=new ComboBox<>();
+               cajita6.getItems().setAll(paraleloss);
+               cajita6.setPromptText("Escoja un paralelo");
+               v2.getChildren().add(cajita6);
+               cajita6.setOnAction(fh->{
+                   cajita6.setDisable(true);
+                   Paralelo pre = (Paralelo) cajita6.getValue();
+                   Button eliminar = new Button("Eliminar Paralelo");
+                   v2.getChildren().add(eliminar);
+                     eliminar.setOnAction(eh->{
+                     NewClass.eliminarParalelo(".\\archivos\\materias.txt", nombreM, pre);
+                     visualizar();
+                     mostrarAlerta(Alert.AlertType.INFORMATION, "BORRADO EXITOSAMENTE");
+                     v2.getChildren().clear();
+       
+               });
+
+               });
+               
+  
+            });
+
+            v2.getChildren().addAll(cajita5);
             
         });
       panelsecconf.add(v2, 3, 0);
