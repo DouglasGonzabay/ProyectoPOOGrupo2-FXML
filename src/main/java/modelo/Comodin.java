@@ -29,7 +29,7 @@ public class Comodin {
     return comodinSalon;
   }
   //Elimina dos de las preguntas y suma 1 al valor de comodinCincuenta
-  public String cincuentaCincuenta(Pregunta p){
+  public void cincuentaCincuenta(Pregunta p){
     ArrayList<String> respuestas = new ArrayList<>();
     respuestas.add(p.getR2());
     respuestas.add(p.getR3());
@@ -39,10 +39,13 @@ public class Comodin {
       int index=(int)(Math.random()*respuestas.size());
       respuestaRandom = respuestas.get(index);
     }
-    Pregunta pregunta1 = new Pregunta(p.getEnunciado(),p.getNivel(),p.getRespuestaCorrecta(),respuestaRandom,"-","-");
-    String muestraP = pregunta1.mostrarPregunta();
-    comodinCincuenta += 1;
-    return muestraP;
+    p.setR2(respuestaRandom);
+    p.setR3("-");
+    p.setR4("-");
+    //Pregunta pregunta1 = new Pregunta(p.getEnunciado(),p.getNivel(),p.getRespuestaCorrecta(),respuestaRandom,"-","-");
+    //String muestraP = pregunta1.mostrarPregunta();
+    //comodinCincuenta += 1;
+    //return muestraP;
   }
   public void consultaCompanero(Estudiante e){
     sc = new Scanner(System.in);
