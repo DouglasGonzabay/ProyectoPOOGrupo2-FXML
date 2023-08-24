@@ -78,6 +78,10 @@ public class SecondaryController implements Initializable {
         App.setRoot("primary");
     }
     @FXML
+    private void switchToJuego()throws IOException {
+        App.setRoot("juego");
+    }
+    @FXML
     private void modParalelo(ActionEvent event){
         slparalelo.setDisable(false);
         ArrayList<Paralelo> par = (ArrayList<Paralelo>)slmateria.getValue().getParalelos();
