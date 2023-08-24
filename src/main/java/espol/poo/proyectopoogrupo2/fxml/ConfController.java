@@ -21,6 +21,7 @@ import modelo.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -101,6 +102,25 @@ public class ConfController implements Initializable {
             //b1.getChildren().add(texto);
             panelVisual.getChildren().add(texto);            
         }
+    }
+    @FXML
+    private void visualizarP(Materia m){
+        panelVisual.getChildren().clear();
+        panelVisual.getChildren().add(new Text("Preguntas de: "+m.getNombre()));
+        ScrollPane sc = new ScrollPane();
+        VBox mostrar = new VBox();
+        ArrayList<Pregunta>preguntas= Pregunta.leerPreguntas(".\\archivos\\"+m.getCodigo()+".dat");
+        for(int i =0; i<preguntas.size();i++){
+           Text texto = new Text(i+1+"."+preguntas.get(i).mostrarPregunta());
+           mostrar.getChildren().add(texto);
+        }
+        sc.setContent(mostrar);
+        sc.setMaxWidth(400); // Ancho máximo
+        sc.setMaxHeight(600); // Alto máximo
+        panelVisual.getChildren().add(sc);
+        
+      
+    
     }
     @FXML
     private void aTermino(){
@@ -477,38 +497,85 @@ public class ConfController implements Initializable {
     private void adPreguntas(){
         panelsecconf.getChildren().clear();
         ArrayList<Materia>materias=NewClass.leerMaterias(".\\archivos\\materias.txt");
-        ComboBox<Materia> preguntas=new ComboBox<>();
-        preguntas.getItems().setAll(materias);
-        preguntas.setPromptText("Escoja una Materia");
+        ComboBox<Materia> mpreguntas=new ComboBox<>();
+        mpreguntas.getItems().setAll(materias);
+        mpreguntas.setPromptText("Escoja una Materia");
         Button agPregunta=new Button("Agregar pregunta");
         Button elimPregunta=new Button("Eliminar pregunta");
-        panelsecconf.add(preguntas, 0, 0);
+        panelsecconf.add(mpreguntas, 0, 0);
         panelsecconf.add(agPregunta, 0, 1);
         panelsecconf.add(elimPregunta, 0, 2);
+        VBox muestra = new VBox();
+        mpreguntas.setOnAction(event->{
+        mpreguntas.setDisable(true);
+        Materia seleccion = (Materia) mpreguntas.getValue();
+        ArrayList<Pregunta>preguntas= Pregunta.leerPreguntas(".\\archivos\\"+seleccion.getCodigo()+".dat");
+        visualizarP(seleccion);
         agPregunta.setOnAction(d->{
-            Button agregar=new Button("Agregar");
+            muestra.getChildren().clear();
             TextField enunciadoP=new TextField();
-            String newEnunciado=enunciadoP.getText();
             enunciadoP.setPromptText("Enunciado de la pregunta");
             TextField nivelP=new TextField();
-            String nivelDeP=nivelP.getText();
             nivelP.setPromptText("Nivel de la pregunta");
-            TextField respuestaC=new TextField();
-            String respuestaCorrecta=respuestaC.getText();
-            respuestaC.setPromptText("Respuesta correcta");
+            TextField respuestaC = new TextField();
+            respuestaC.setPromptText("Ingrese la respuesta correcta");
             TextField respuestaPos1=new TextField();
-            String respuestaPosible1=respuestaPos1.getText();
             respuestaPos1.setPromptText("Posible respuesta 1");
             TextField respuestaPos2=new TextField();
-            String respuestaPosible2=respuestaPos2.getText();
             respuestaPos2.setPromptText("Posible respuesta 2");
             TextField respuestaPos3=new TextField();
-            String respuestaPosible3=respuestaPos3.getText();
-            respuestaPos3.setPromptText("Posible respuesta 3");            
-            VBox b6=new VBox(7);   
-            b6.getChildren().addAll(enunciadoP,nivelP,respuestaC,respuestaPos1,respuestaPos2,respuestaPos3,agregar);
-            panelsecconf.add(b6,1,1);
+            respuestaPos3.setPromptText("Posible respuesta 3");
+            Button agregar=new Button("Agregar");
+            muestra.getChildren().addAll(enunciadoP,nivelP,respuestaC,respuestaPos1,respuestaPos2,respuestaPos3,agregar);
+            agregar.setOnAction(pl->{
+                try{
+                enunciadoP.setDisable(true);
+                nivelP.setDisable(true);
+                respuestaC.setDisable(true);
+                respuestaPos1.setDisable(true);
+                respuestaPos2.setDisable(true);
+                respuestaPos3.setDisable(true);
+                String enunciado = enunciadoP.getText();
+                int nivel = Integer.parseInt(nivelP.getText());
+                String Rc = respuestaC.getText();
+                String R1 = respuestaPos1.getText();
+                String R2 = respuestaPos2.getText();
+                String R3 = respuestaPos3.getText();
+                Pregunta newP = new Pregunta(enunciado,nivel,Rc,R1,R2,R3);
+                preguntas.add(newP);
+                Pregunta.escribirPreguntas(".\\archivos\\"+seleccion.getCodigo()+".dat", preguntas);
+                mostrarAlerta(Alert.AlertType.INFORMATION, "AGREGADO EXITOSAMENTE");
+                muestra.getChildren().clear();
+
+                }catch(NumberFormatException iop){}
+                mostrarAlerta(Alert.AlertType.INFORMATION, "ERROR EN EL INGRESO DEL NIVEL DE LA PREGUNTA");
+                muestra.getChildren().clear();
+            });     
         });
+        elimPregunta.setOnAction(lp->{
+            muestra.getChildren().clear();
+            TextField cajita = new TextField();
+            cajita.setPromptText("Ingrese el numero de la pregunta a eliminar");
+            muestra.getChildren().add(cajita);
+            cajita.setOnAction(lo->{
+                cajita.setDisable(true);
+                String ingreso = cajita.getText();
+                Button aceptar = new Button("borrar");
+                muestra.getChildren().add(aceptar);
+                aceptar.setOnAction(pl->{
+                    int numero = Integer.parseInt(ingreso);
+                    preguntas.remove(numero-1);
+                    Pregunta.escribirPreguntas(".\\archivos\\"+seleccion.getCodigo()+".dat", preguntas);
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "BORRADO EXITOSAMENTE");
+                    visualizarP(seleccion);
+                    muestra.getChildren().clear();
+            });
+            });
+
+        });
+        });
+        
+      panelsecconf.add(muestra,2,0);
     }
     
     
