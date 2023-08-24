@@ -333,7 +333,7 @@ public class NewClass {
          
      }
      //Eliminar un paralelo de la materia 
-     public static void eliminarParalelo(String ruta, String materia, Paralelo p){
+     public static void eliminarParalelo(String ruta, String materia,String codigo, Paralelo p){
          ArrayList<String> lectura = new ArrayList<>();
          try(BufferedReader r = new BufferedReader(new FileReader(ruta))){
              String l = r.readLine();
@@ -373,6 +373,12 @@ public class NewClass {
          }catch(IOException eoi){
              System.out.println(eoi);
          }
+       String [] info = p.toString().split("-");
+       String numP = info[0];
+       String anio = info[3];
+       String numA = info[2];
+       File remover = new File(".\\archivos\\"+codigo+"-"+numP+"-"+anio+"-"+numA+".csv");
+       remover.delete();
      }
 
     public static void main(String[] arr){
@@ -418,7 +424,7 @@ public class NewClass {
             }
         }*/
        //ArrayList<Materia> materias = NewClass.leerMaterias(".\\archivos\\materias.txt");
-       //eliminarParalelo(".\\archivos\\materias.txt", "FP", new Paralelo(3,new TerminoAcademico("2025","1")));
+       //eliminarParalelo(".\\archivos\\materias.txt", "FP", new Paralelo(2,new TerminoAcademico("2024","2")));
        
     }
 }
