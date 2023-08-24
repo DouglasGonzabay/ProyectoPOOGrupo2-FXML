@@ -42,4 +42,7 @@
    <center>
       <VBox fx:id="panelPreguntas" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
    </center>
+   <bottom>
+      <Button fx:id="btSalir" mnemonicParsing="false" onAction="#switchToPrimary" text="Salir" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>
