@@ -4,6 +4,7 @@
  */
 package espol.poo.proyectopoogrupo2.fxml;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,6 +56,8 @@ public class JuegoController implements Initializable {
     //static int m;
     @FXML
     private Label lbpregunta;
+    @FXML
+    private Button btSalir;
    
     /**
      * Initializes the controller class.
@@ -64,6 +67,7 @@ public class JuegoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         //value = true;
+        btSalir.setDisable(true);
         Pregunta pregunta1 = new Pregunta("¿Cuál es el atributo de campo que permite acceder a cualquier atributo o metodo sin impedimento alguno?", 1, "Public","Private","Protected","Defect");
   Pregunta pregunta2 = new Pregunta("Si tenemos que escribir por consola una variable de tipo char ¿Cúal de estas opciones es la correcta para inicializar una variable char por Scanner (Scanner sc = new Scanner(System.in)): ", 1, "sc.next().charAt(0)","sc.nextChar()","sc.nexInt()","sc.nextLine()");
   Pregunta pregunta3 = new Pregunta("¿Cual debe ser la salida de la siguiente linea?: String mes = String(12)", 2, "Error","12","String 12","Ninguna de las anteriores");
@@ -170,6 +174,7 @@ public class JuegoController implements Initializable {
         alert.setContentText("JUEGO TERMINADO");
         alert.showAndWait();
         panelPreguntas.getChildren().clear();
+        btSalir.setDisable(false);
         
         }
     }
@@ -213,6 +218,11 @@ public class JuegoController implements Initializable {
      }
    }
    
+   @FXML
+    private void switchToPrimary() throws IOException {
+        App.setRoot("primary");
+        
+    }    
    /*
    private class Secuencia extends Thread{
        Boolean sec;
