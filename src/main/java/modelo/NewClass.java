@@ -418,7 +418,7 @@ public class NewClass {
             }
         }*/
        //ArrayList<Materia> materias = NewClass.leerMaterias(".\\archivos\\materias.txt");
-       eliminarParalelo(".\\archivos\\materias.txt", "FP", new Paralelo(3,new TerminoAcademico("2025","1")));
+       //eliminarParalelo(".\\archivos\\materias.txt", "FP", new Paralelo(3,new TerminoAcademico("2025","1")));
        
     }
 }
