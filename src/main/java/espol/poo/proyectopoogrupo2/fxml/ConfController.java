@@ -507,7 +507,8 @@ public class ConfController implements Initializable {
         panelsecconf.add(elimPregunta, 0, 2);
         VBox muestra = new VBox();
         mpreguntas.setOnAction(event->{
-        mpreguntas.setDisable(true);
+        //mpreguntas.setDisable(true);
+        muestra.getChildren().clear();
         Materia seleccion = (Materia) mpreguntas.getValue();
         ArrayList<Pregunta>preguntas= Pregunta.leerPreguntas(".\\archivos\\"+seleccion.getCodigo()+".dat");
         visualizarP(seleccion);
@@ -529,12 +530,12 @@ public class ConfController implements Initializable {
             muestra.getChildren().addAll(enunciadoP,nivelP,respuestaC,respuestaPos1,respuestaPos2,respuestaPos3,agregar);
             agregar.setOnAction(pl->{
                 try{
-                enunciadoP.setDisable(true);
+                /*enunciadoP.setDisable(true);
                 nivelP.setDisable(true);
                 respuestaC.setDisable(true);
                 respuestaPos1.setDisable(true);
                 respuestaPos2.setDisable(true);
-                respuestaPos3.setDisable(true);
+                respuestaPos3.setDisable(true);*/
                 String enunciado = enunciadoP.getText();
                 int nivel = Integer.parseInt(nivelP.getText());
                 String Rc = respuestaC.getText();
@@ -545,6 +546,7 @@ public class ConfController implements Initializable {
                 preguntas.add(newP);
                 Pregunta.escribirPreguntas(".\\archivos\\"+seleccion.getCodigo()+".dat", preguntas);
                 mostrarAlerta(Alert.AlertType.INFORMATION, "AGREGADO EXITOSAMENTE");
+                visualizarP(seleccion);
                 muestra.getChildren().clear();
 
                 }catch(NumberFormatException iop){}
@@ -556,12 +558,11 @@ public class ConfController implements Initializable {
             muestra.getChildren().clear();
             TextField cajita = new TextField();
             cajita.setPromptText("Ingrese el numero de la pregunta a eliminar");
-            muestra.getChildren().add(cajita);
+            Button aceptar = new Button("borrar");
+            muestra.getChildren().addAll(cajita,aceptar);
             cajita.setOnAction(lo->{
                 cajita.setDisable(true);
                 String ingreso = cajita.getText();
-                Button aceptar = new Button("borrar");
-                muestra.getChildren().add(aceptar);
                 aceptar.setOnAction(pl->{
                     int numero = Integer.parseInt(ingreso);
                     preguntas.remove(numero-1);
