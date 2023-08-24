@@ -432,6 +432,7 @@ public class ConfController implements Initializable {
                cajita5.setDisable(true);
                Materia seleccionado = (Materia) cajita5.getValue();
                String nombreM = seleccionado.getNombre();
+               String cod = seleccionado.getCodigo();
                ArrayList<Paralelo> paraleloss = seleccionado.getParalelos();
                ComboBox<Paralelo> cajita6=new ComboBox<>();
                cajita6.getItems().setAll(paraleloss);
@@ -442,8 +443,8 @@ public class ConfController implements Initializable {
                    Paralelo pre = (Paralelo) cajita6.getValue();
                    Button eliminar = new Button("Eliminar Paralelo");
                    v2.getChildren().add(eliminar);
-                     eliminar.setOnAction(eh->{
-                     NewClass.eliminarParalelo(".\\archivos\\materias.txt", nombreM, pre);
+                     eliminar.setOnAction(eh->{ 
+                     NewClass.eliminarParalelo(".\\archivos\\materias.txt", nombreM,cod,pre);
                      visualizar();
                      mostrarAlerta(Alert.AlertType.INFORMATION, "BORRADO EXITOSAMENTE");
                      v2.getChildren().clear();
