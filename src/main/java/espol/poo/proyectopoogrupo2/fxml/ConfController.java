@@ -4,8 +4,12 @@
  */
 package espol.poo.proyectopoogrupo2.fxml;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.ResourceBundle;
@@ -21,9 +25,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import modelo.Materia;
 import modelo.NewClass;
 import modelo.TerminoAcademico;
@@ -340,17 +347,85 @@ public class ConfController implements Initializable {
             v2.getChildren().clear();
             ArrayList<Materia>materias1=NewClass.leerMaterias(".\\archivos\\materias.txt");
             ArrayList<TerminoAcademico> terminos1 = TerminoAcademico.cargarTerminos(".\\archivos\\TerminosAcademicos.txt");
-            Button aplicar3=new Button("Aplicar");
-            TextField numParalelo = new TextField();
-            String num_Paralelo=numParalelo.getText();
-            numParalelo.setPromptText("Número del paralelo");
             ComboBox<Materia> cajita3=new ComboBox<>();
-            cajita3.getItems().setAll(materias1);  
-            cajita3.setPromptText("Escoja una materia");                        
-            ComboBox<TerminoAcademico> cajita4=new ComboBox<>();
-            cajita4.getItems().setAll(terminos1);
-            cajita4.setPromptText("Escoja un término académico");
-            v2.getChildren().addAll(cajita3,cajita4,numParalelo,aplicar3);
+            cajita3.setPromptText("Escoja una materia"); 
+            cajita3.getItems().setAll(materias1);
+            
+            cajita3.setOnAction(jh->{
+                Materia selec = (Materia) cajita3.getValue();
+                String nombreM = selec.getNombre();
+                cajita3.setDisable(true);
+                ComboBox<TerminoAcademico> cajita4=new ComboBox<>();
+                cajita4.setPromptText("Escoja un término académico");
+                cajita4.getItems().setAll(terminos1);
+                v2.getChildren().add(cajita4);
+                cajita4.setOnAction(pl->{
+                    TerminoAcademico terM = (TerminoAcademico) cajita4.getValue();
+                    String anio = terM.getAnio();
+                    String numT = terM.getNumero();
+                    cajita4.setDisable(true);
+                    Button boton3=new Button("Aplicar");  
+                    TextField numParalelo = new TextField();
+                    numParalelo.setPromptText("Número del paralelo");
+                    v2.getChildren().addAll(numParalelo,boton3);
+                    boton3.setOnAction(g->{
+                        String num_Paralelo=numParalelo.getText();
+                        try{
+                        int numero = Integer.parseInt(num_Paralelo);
+                        NewClass.agregarParalelo(".\\archivos\\materias.txt",nombreM,numero,anio,numT);
+                        numParalelo.setText("");
+                        }catch(NumberFormatException nxf){
+                        mostrarAlerta(Alert.AlertType.INFORMATION, "INGRESO DE DATOS ERRONEO");
+                        numParalelo.setText("");}
+                        Label carga = new Label("Desea cargar el archivo del paralelo?");
+                        HBox hbC = new HBox();
+                        Button si = new Button("Si");
+                        Button no = new Button("No");
+                        hbC.getChildren().addAll(si,no);
+                        v2.getChildren().addAll(carga,hbC);
+                        FileChooser fileelegido = new FileChooser();
+                        si.setOnAction(sib->{
+                            Window ventanaEmergente = si.getScene().getWindow();
+                            File selectedFile = fileelegido.showOpenDialog(ventanaEmergente);
+                            if (selectedFile != null) {
+                            try {
+                            Path archivoDir = new File("archivos").toPath(); // Carpeta "archivos" en el proyecto
+                            Path targetPath = archivoDir.resolve(selectedFile.getName());
+                            Files.copy(selectedFile.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+                            System.out.println("Archivo cargado y guardado en la carpeta 'archivos'");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                }
+                            }
+                        v2.getChildren().clear();
+                        });
+                        no.setOnAction(nob->{
+                           mostrarAlerta(Alert.AlertType.INFORMATION, "RECUERDE CARGAR EL ARCHIVO LUEGO EN LA SIGUIENTE\n RUTA: .\\archivos");
+                           v2.getChildren().clear();
+                        
+                        });
+                        
+
+                    });
+                
+                });
+                
+                
+                
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            });
+                                   
+            
+            v2.getChildren().add(cajita3);
         });
         elimParalelo.setOnAction(c->{
             v2.getChildren().clear();
