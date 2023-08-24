@@ -547,23 +547,25 @@ public class ConfController implements Initializable {
                 Pregunta.escribirPreguntas(".\\archivos\\"+seleccion.getCodigo()+".dat", preguntas);
                 mostrarAlerta(Alert.AlertType.INFORMATION, "AGREGADO EXITOSAMENTE");
                 visualizarP(seleccion);
+                nivelP.setText("");
                 muestra.getChildren().clear();
 
-                }catch(NumberFormatException iop){}
+                }catch(NumberFormatException iop){
                 mostrarAlerta(Alert.AlertType.INFORMATION, "ERROR EN EL INGRESO DEL NIVEL DE LA PREGUNTA");
                 muestra.getChildren().clear();
+                }
+                
             });     
         });
         elimPregunta.setOnAction(lp->{
             muestra.getChildren().clear();
             TextField cajita = new TextField();
             cajita.setPromptText("Ingrese el numero de la pregunta a eliminar");
-            Button aceptar = new Button("borrar");
+            Button aceptar = new Button("Borrar");
             muestra.getChildren().addAll(cajita,aceptar);
-            cajita.setOnAction(lo->{
-                cajita.setDisable(true);
-                String ingreso = cajita.getText();
-                aceptar.setOnAction(pl->{
+            aceptar.setOnAction(pl->{
+                    String ingreso = cajita.getText();
+                    cajita.setDisable(true);
                     int numero = Integer.parseInt(ingreso);
                     preguntas.remove(numero-1);
                     Pregunta.escribirPreguntas(".\\archivos\\"+seleccion.getCodigo()+".dat", preguntas);
@@ -571,8 +573,7 @@ public class ConfController implements Initializable {
                     visualizarP(seleccion);
                     muestra.getChildren().clear();
             });
-            });
-
+            muestra.getChildren().addAll(cajita,aceptar);
         });
         });
         
