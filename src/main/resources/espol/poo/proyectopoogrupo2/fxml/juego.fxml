@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane fx:id="escena" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="447.0" prefWidth="652.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.poo.proyectopoogrupo2.fxml.JuegoController">
    <left>
       <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="174.0" BorderPane.alignment="CENTER">
@@ -35,7 +34,7 @@
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="652.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="enunciado" prefHeight="17.0" prefWidth="452.0" text="Label" wrapText="true" />
+            <Label fx:id="enunciado" prefHeight="43.0" prefWidth="452.0" text="Label" wrapText="true" />
             <Label fx:id="tiempo" text="Label" />
             <ImageView fx:id="imgTiempo" fitHeight="80.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true" />
          </children>
@@ -46,42 +45,42 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="opcionA" mnemonicParsing="false" prefHeight="26.0" prefWidth="41.0" text="A.">
+                  <Button fx:id="opcionA" mnemonicParsing="false" prefHeight="26.0" prefWidth="42.0" text="A.">
                      <font>
                         <Font name="Berlin Sans FB" size="14.0" />
                      </font>
                   </Button>
-                  <Label fx:id="enunciadoA" prefHeight="57.0" prefWidth="292.0" text="Label" wrapText="true" />
+                  <Label fx:id="enunciadoA" prefHeight="25.0" prefWidth="284.0" text="Label" wrapText="true" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="opcionB" mnemonicParsing="false" prefHeight="26.0" prefWidth="36.0" text="B.">
+                  <Button fx:id="opcionB" mnemonicParsing="false" prefHeight="30.0" prefWidth="41.0" text="B.">
                      <font>
                         <Font name="Berlin Sans FB Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Label fx:id="EnunciadoB" prefHeight="61.0" prefWidth="291.0" text="Label" wrapText="true" />
+                  <Label fx:id="EnunciadoB" prefHeight="31.0" prefWidth="284.0" text="Label" wrapText="true" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="OpcionC" mnemonicParsing="false" prefHeight="30.0" prefWidth="37.0" text="C.">
+                  <Button fx:id="OpcionC" mnemonicParsing="false" prefHeight="30.0" prefWidth="42.0" text="C.">
                      <font>
                         <Font name="Berlin Sans FB Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Label fx:id="EnunciadoC" prefHeight="66.0" prefWidth="290.0" text="Label" wrapText="true" />
+                  <Label fx:id="EnunciadoC" prefHeight="29.0" prefWidth="283.0" text="Label" wrapText="true" />
                </children>
             </HBox>
             <HBox prefHeight="104.0" prefWidth="318.0">
                <children>
-                  <Button fx:id="OpcionD" mnemonicParsing="false" prefHeight="30.0" prefWidth="38.0" text="D.">
+                  <Button fx:id="OpcionD" mnemonicParsing="false" prefHeight="30.0" prefWidth="41.0" text="D.">
                      <font>
                         <Font name="Berlin Sans FB Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Label fx:id="EnunciadoD" prefHeight="66.0" prefWidth="289.0" text="Label" wrapText="true" />
+                  <Label fx:id="EnunciadoD" prefHeight="31.0" prefWidth="283.0" text="Label" wrapText="true" />
                </children>
             </HBox>
          </children>
