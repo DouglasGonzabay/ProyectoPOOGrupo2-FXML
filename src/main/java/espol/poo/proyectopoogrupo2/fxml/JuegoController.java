@@ -11,13 +11,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import modelo.Comodin;
 import modelo.Pregunta;
 
 /**
@@ -29,8 +34,6 @@ public class JuegoController implements Initializable {
 
     @FXML
     private BorderPane escena;
-    @FXML
-    private Label enunciado;
     @FXML
     private Label tiempo;
     @FXML
@@ -45,26 +48,18 @@ public class JuegoController implements Initializable {
     private Label participante;
     @FXML
     private Label compañero;
-    @FXML
-    private Button opcionA;
-    @FXML
-    private Label enunciadoA;
-    @FXML
-    private Button opcionB;
-    @FXML
-    private Label EnunciadoB;
-    @FXML
-    private Button OpcionC;
-    @FXML
-    private Label EnunciadoC;
-    @FXML
-    private Button OpcionD;
-    @FXML
-    private Label EnunciadoD;
 
+/*
     static boolean pregTerm;
     static boolean esCorrecta;
     int n;
+    */
+    @FXML
+    private Label lbpregunta;
+    @FXML
+    private VBox panelPreguntas;
+    
+    static int m;
     /**
      * Initializes the controller class.
      */
@@ -78,41 +73,149 @@ public class JuegoController implements Initializable {
     preguntas.add(pregunta1);
     preguntas.add(pregunta2);
     preguntas.add(pregunta3);
-    esCorrecta = true;
-    n = 0;
-    for(int i=0; i<preguntas.size();i++){
-
-        if(esCorrecta){
-            mostrarPregunta(preguntas.get(i));
-            i = n;
-            System.out.println(i);
-        }else{
-            enunciado.setText("");
-        enunciadoA.setText("");
-        EnunciadoB.setText("");
-        EnunciadoC.setText("");
-        EnunciadoD.setText("");
-            break;
-        }
-        
+    int n = 0;
+    //int tamaño = preguntas.size();
+    //m =0;
+    mostrarPregunta(preguntas,n);
     }
-    }    
-    public void mostrarPregunta(Pregunta p){
-        //int i = 0;
-        String[] respuestas = new String[]{p.getRespuestaCorrecta(),p.getR2(),p.getR3(), p.getR4()};
+    
+    public void mostrarPregunta(ArrayList<Pregunta> preguntas, int n){
+        if(n<preguntas.size()&&n!=-10){
+        panelPreguntas.getChildren().clear();
+    String[] respuestas = new String[]{preguntas.get(n).getRespuestaCorrecta(),preguntas.get(n).getR2(),preguntas.get(n).getR3(), preguntas.get(n).getR4()};
     List<String> respuestas_l = Arrays.asList(respuestas);
     Collections.shuffle(respuestas_l);
-    enunciado.setText(p.getEnunciado());
-    enunciado.setFont(new Font("Tahoma", 14));
-    enunciadoA.setText(respuestas_l.get(0));
-    enunciadoA.setFont(new Font("Tahoma", 14));
-    EnunciadoB.setText(respuestas_l.get(1));
-    EnunciadoB.setFont(new Font("Tahoma", 14));
-    EnunciadoC.setText(respuestas_l.get(2));
-    EnunciadoC.setFont(new Font("Tahoma", 14));
-    EnunciadoD.setText(respuestas_l.get(3));
-    EnunciadoD.setFont(new Font("Tahoma", 14));
+    Label enun = new Label(preguntas.get(n).getEnunciado());
+    enun.setStyle("-fx-font-weight: bold;-fx-font-size: 20;");
+    enun.setWrapText(true);
+    panelPreguntas.getChildren().add(enun);
+    for(int i = 0; i<respuestas_l.size();i++){
+        HBox h = new HBox(5);
+        Label letra =new Label("");
+            switch (i) {
+                case 0:
+                    letra.setText("a.");
+                    break;
+                case 1:
+                    letra.setText("b.");
+                    break;
+                case 2:
+                    letra.setText("c.");
+                    break;
+                default:
+                    letra.setText("d.");
+                    break;
+            }
+        letra.setStyle("-fx-font-weight: bold;-fx-font-size: 20;");
+        String respondido = respuestas_l.get(i);
+        Label res = new Label(respondido);
+        res.setStyle("-fx-font-weight: bold;-fx-font-size: 15;");
+        res.setWrapText(true);
+        h.getChildren().addAll(letra,res);
+        Pregunta p = preguntas.get(n);
+        cincuenta.setOnMouseClicked(eh->{
+            ComodinPregunta(p);
+            mostrarPregunta(preguntas,n);
+            cincuenta.setDisable(true);
+        });
+        
+        h.setOnMouseClicked(e->{
+            int m = 0;
+            if(evaluarPregunta(p,respondido)){
+                m = n+1;
+            }else{
+                m = -10;
+            }
+            
+            mostrarPregunta(preguntas,m);
+        });
+        panelPreguntas.getChildren().add(h);
+    }}else{
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Resultado de operacion");
+        alert.setHeaderText("Notificacion");
+        alert.setContentText("JUEGO TERMINADO");
+        alert.showAndWait();
+        panelPreguntas.getChildren().clear();
+        }
     }
+    
+    
+   public boolean evaluarPregunta(Pregunta p, String respuesta){
+       if(respuesta.equals(p.getRespuestaCorrecta())){
+           return true; 
+           
+        }else{
+           return false;
+            
+        }
+   }
+   public static void ComodinPregunta(Pregunta p){
+       Comodin c = new Comodin();
+       c.cincuentaCincuenta(p);
+    
+   }
+    
+    
+    /*
+    for(m = 0; m<preguntas.size();m++){
+        //if(m==0){
+        panelPreguntas.getChildren().clear();
+    String[] respuestas = new String[]{preguntas.get(n).getRespuestaCorrecta(),preguntas.get(n).getR2(),preguntas.get(n).getR3(), preguntas.get(n).getR4()};
+    List<String> respuestas_l = Arrays.asList(respuestas);
+    Collections.shuffle(respuestas_l);
+    Label enun = new Label(preguntas.get(n).getEnunciado());
+    enun.setStyle("-fx-font-weight: bold;-fx-font-size: 20;");
+    enun.setWrapText(true);
+    panelPreguntas.getChildren().add(enun);
+    for(int i = 0; i<respuestas_l.size();i++){
+        HBox h = new HBox(5);
+        Label letra =new Label("");
+            switch (i) {
+                case 0:
+                    letra.setText("a.");
+                    break;
+                case 1:
+                    letra.setText("b.");
+                    break;
+                case 2:
+                    letra.setText("c.");
+                    break;
+                default:
+                    letra.setText("d.");
+                    break;
+            }
+        letra.setStyle("-fx-font-weight: bold;-fx-font-size: 20;");
+        String respondido = respuestas_l.get(i);
+        Label res = new Label(respondido);
+        res.setStyle("-fx-font-weight: bold;-fx-font-size: 15;");
+        res.setWrapText(true);
+        h.getChildren().addAll(letra,res);
+        Pregunta p = preguntas.get(n);
+        
+        h.setOnMouseClicked(e->{
+            comprobarPregunta(p,respondido);
+        });
+        panelPreguntas.getChildren().add(h);
+    }
+    //}
+       // else{
+          //  break;
+        //}
+    }
+    
+
+    }    
+    public void comprobarPregunta(Pregunta p, String respuesta){
+        //int i = 0;
+        if(respuesta.equals(p.getRespuestaCorrecta())){
+           //return true; 
+           m =1;
+        }else{
+            //return false;
+            m = 0;
+        }
+    }*/
     
     
 
