@@ -49,17 +49,13 @@ public class JuegoController implements Initializable {
     @FXML
     private Label compañero;
 
-/*
-    static boolean pregTerm;
-    static boolean esCorrecta;
-    int n;
-    */
-    @FXML
-    private Label lbpregunta;
     @FXML
     private VBox panelPreguntas;
     
     static int m;
+    @FXML
+    private Label lbpregunta;
+   
     /**
      * Initializes the controller class.
      */
