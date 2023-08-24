@@ -13,7 +13,7 @@ import java.util.Set;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-
+import modelo.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -264,45 +264,80 @@ public class ConfController implements Initializable {
     private void ediMateriaParalelo(){
         panelsecconf.getChildren().clear();
         visualizar();
-        Button inMateria=new Button("Ingresar materia");
+        Button inMateria=new Button("Ingresar materia");  
+        inMateria.setWrapText(true); 
         Button ediMateria=new Button("Editar materia");
+        ediMateria.setWrapText(true); 
         Button agParalelo=new Button("Agregar paralelo");
+        agParalelo.setWrapText(true); 
         Button elimParalelo=new Button("Eliminar paralelo");
+        elimParalelo.setWrapText(true); 
         panelsecconf.add(inMateria, 0, 0);
         panelsecconf.add(ediMateria, 0, 1);
         panelsecconf.add(agParalelo, 0, 2);
         panelsecconf.add(elimParalelo, 0, 3);
         VBox v2=new VBox(5); 
         inMateria.setOnAction(f->{
+            v2.getChildren().clear();
             Button aplicar1=new Button("Aplicar");
             TextField inCodigo=new TextField();
             inCodigo.setPromptText("Código");  
-            String cod_Maeria=inCodigo.getText();
             TextField inNombre=new TextField();
-            String nomb_Materia=inNombre.getText();
             inNombre.setPromptText("Nombre");
             TextField inNiveles=new TextField();
             inNiveles.setPromptText("Cantidad de niveles");
+            
+            aplicar1.setOnAction(l->{
+            String cod_Materia=inCodigo.getText();
+            String nomb_Materia=inNombre.getText();
             String niveles_Pregunta=inNiveles.getText();
+            NewClass.agregarMateria(".\\archivos\\materias.txt", nomb_Materia, cod_Materia, niveles_Pregunta);
+            mostrarAlerta(Alert.AlertType.INFORMATION, "INGRESO DE DATOS CORRECTO");
+            inCodigo.setText("");
+            inNombre.setText("");
+            inNiveles.setText("");
+            visualizar();
+                
+            });
+            //NewClass.agregarMateria(".\\archivos\\materias.txt", nomb_Materia, cod_Materia, niveles_Pregunta);
             //int niveles_preguntas=Integer.parseInt(niveles_Pregunta); no se necesiten los niveles convertido en int
-            VBox b2=new VBox(4);
-            b2.getChildren().addAll(inCodigo,inNombre,inNiveles,aplicar1);
-            panelsecconf.add(b2, 1, 0);
+            //VBox b2=new VBox(4);
+            v2.getChildren().addAll(inCodigo,inNombre,inNiveles,aplicar1);
+            //panelsecconf.add(v2, 2, 0);
         });
         ediMateria.setOnAction(a->{
+            v2.getChildren().clear();
             ArrayList<Materia>materias2=NewClass.leerMaterias(".\\archivos\\materias.txt");
-            Button aplicar2=new Button("Aplicar");
-            TextField ediCodigo = new TextField();
-            String ediCod=ediCodigo.getText();
-            ediCodigo.setPromptText("Código");
-            ComboBox<Materia> cajita2=new ComboBox<>();
-            cajita2.getItems().setAll(materias2);
-            cajita2.setPromptText("Escoja una materia");
-            VBox b3=new VBox(3);
-            b3.getChildren().addAll(ediCodigo,cajita2,aplicar2);
-            panelsecconf.add(b3, 1, 1);                     
+            Button boton2=new Button("Aplicar");
+            ComboBox<Materia> cajita=new ComboBox<>();
+            cajita.setPromptText("Escoja una materia");
+            cajita.getItems().setAll(materias2);
+            cajita.setOnAction(pl->{
+                Materia seleccion = (Materia) cajita.getValue();
+                cajita.setDisable(true);
+                TextField ingresoM = new TextField();
+                ingresoM.setPromptText("Nuevo Nombre");
+                TextField ingresoN = new TextField();
+                ingresoN.setPromptText("Nueva cantidad de niveles");
+                v2.getChildren().addAll(ingresoM,ingresoN,boton2);
+                boton2.setOnAction(il->{
+                String lectura1 = ingresoM.getText();
+                String lectura2 = ingresoN.getText();
+                String codigo = seleccion.getCodigo();
+                NewClass.editarMateria(".\\archivos\\materias.txt",codigo,lectura1);
+                NewClass.editarMateria(".\\archivos\\materias.txt",codigo,lectura2);
+                ingresoM.setText("");
+                ingresoN.setText("");
+                mostrarAlerta(Alert.AlertType.INFORMATION, "INGRESO DE DATOS CORRECTOS");
+                v2.getChildren().clear();
+                });
+            });
+        v2.getChildren().add(cajita);
         });
+        
+        
         agParalelo.setOnAction(b->{
+            v2.getChildren().clear();
             ArrayList<Materia>materias1=NewClass.leerMaterias(".\\archivos\\materias.txt");
             ArrayList<TerminoAcademico> terminos1 = TerminoAcademico.cargarTerminos(".\\archivos\\TerminosAcademicos.txt");
             Button aplicar3=new Button("Aplicar");
@@ -315,18 +350,18 @@ public class ConfController implements Initializable {
             ComboBox<TerminoAcademico> cajita4=new ComboBox<>();
             cajita4.getItems().setAll(terminos1);
             cajita4.setPromptText("Escoja un término académico");
-            VBox b4=new VBox(4);
-            b4.getChildren().addAll(cajita3,cajita4,numParalelo,aplicar3);
-            panelsecconf.add(b4, 1, 2); 
+            v2.getChildren().addAll(cajita3,cajita4,numParalelo,aplicar3);
         });
         elimParalelo.setOnAction(c->{
+            v2.getChildren().clear();
             Button aplicar4=new Button("Aplicar");
             ComboBox<String> cajita5=new ComboBox<>();
             cajita5.setPromptText("Escoja un paralelo");
-            VBox b5=new VBox(2);
-            b5.getChildren().addAll(cajita5,aplicar4);
-            panelsecconf.add(b5, 1, 3);
+            //VBox b5=new VBox(2);
+            v2.getChildren().addAll(cajita5,aplicar4);
+            
         });
+      panelsecconf.add(v2, 3, 0);
     }
     /*
     Codigó que iria entre las líneas 279 y 280: es para desactivar la caja de texto si se selecciona 
