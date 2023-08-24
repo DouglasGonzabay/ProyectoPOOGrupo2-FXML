@@ -56,7 +56,7 @@
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btatras" mnemonicParsing="false" onAction="#switchToPrimary" text="Atrás" />
-            <Button fx:id="btempezar" mnemonicParsing="false" text="Empezar" />
+            <Button fx:id="btempezar" mnemonicParsing="false" onAction="#switchToJuego" text="Empezar" />
          </children>
       </HBox>
    </bottom>
