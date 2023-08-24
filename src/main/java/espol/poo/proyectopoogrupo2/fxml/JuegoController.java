@@ -52,35 +52,61 @@ public class JuegoController implements Initializable {
     @FXML
     private VBox panelPreguntas;
     
-    static int m;
+    //static int m;
     @FXML
     private Label lbpregunta;
    
     /**
      * Initializes the controller class.
      */
+    //static Boolean value;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        //value = true;
         Pregunta pregunta1 = new Pregunta("¿Cuál es el atributo de campo que permite acceder a cualquier atributo o metodo sin impedimento alguno?", 1, "Public","Private","Protected","Defect");
   Pregunta pregunta2 = new Pregunta("Si tenemos que escribir por consola una variable de tipo char ¿Cúal de estas opciones es la correcta para inicializar una variable char por Scanner (Scanner sc = new Scanner(System.in)): ", 1, "sc.next().charAt(0)","sc.nextChar()","sc.nexInt()","sc.nextLine()");
   Pregunta pregunta3 = new Pregunta("¿Cual debe ser la salida de la siguiente linea?: String mes = String(12)", 2, "Error","12","String 12","Ninguna de las anteriores");
+  Pregunta pregunta4 = new Pregunta("Es la habilidad de definir comportamiento especializado de un subclase: ",3,"Sobrecarga de métodos","Hilos","Sobreescritura de métodos","Ninguna");
+  Pregunta pregunta5 = new Pregunta("Es un contrato de lo que una clase puede hacer sin decirle como hacerlo:  ",3,"Interfaces","Métodos","Sobreescritura de métodos","Herencia");
+  Pregunta pregunta6 = new Pregunta("¿Cuál palabra clave sirve para heredar los metodos y atributos de una clase Padre a una clase Hija?", 2, "extends ","extend","implements","inherit");
     ArrayList<Pregunta> preguntas = new ArrayList<>();
     preguntas.add(pregunta1);
     preguntas.add(pregunta2);
     preguntas.add(pregunta3);
+    preguntas.add(pregunta4);
+    preguntas.add(pregunta5);
+    preguntas.add(pregunta6);
+    Collections.sort(preguntas);
+    /*
+    ArrayList<List<String>> azar = new ArrayList<>();
+    for(Pregunta preg: preguntas){
+        String[] respuestas = new String[]{preg.getRespuestaCorrecta(),preg.getR2(),preg.getR3(), preg.getR4()};
+        List<String> respuestas_l = Arrays.asList(respuestas);
+        Collections.shuffle(respuestas_l);
+        azar.add(respuestas_l);
+    }*/
     int n = 0;
     //int tamaño = preguntas.size();
     //m =0;
     mostrarPregunta(preguntas,n);
+    //Secuencia s = new Secuencia(value,preguntas,n,azar);
+    //s.start();
+    //s.setSec(value);
     }
     
     public void mostrarPregunta(ArrayList<Pregunta> preguntas, int n){
         if(n<preguntas.size()&&n!=-10){
+        
+        lbpregunta.setText("");
         panelPreguntas.getChildren().clear();
+        lbpregunta.setText("Pregunta Nº"+(n+1)+"  Nivel: "+preguntas.get(n).getNivel());
+        lbpregunta.setStyle("-fx-font-weight: bold;-fx-font-size: 20;");
+        
     String[] respuestas = new String[]{preguntas.get(n).getRespuestaCorrecta(),preguntas.get(n).getR2(),preguntas.get(n).getR3(), preguntas.get(n).getR4()};
     List<String> respuestas_l = Arrays.asList(respuestas);
     Collections.shuffle(respuestas_l);
+        
     Label enun = new Label(preguntas.get(n).getEnunciado());
     enun.setStyle("-fx-font-weight: bold;-fx-font-size: 20;");
     enun.setWrapText(true);
@@ -110,8 +136,12 @@ public class JuegoController implements Initializable {
         h.getChildren().addAll(letra,res);
         Pregunta p = preguntas.get(n);
         cincuenta.setOnMouseClicked(eh->{
+            
+            //Secuencia s = new Secuencia(true,preguntas,n,azar);
+            //s.start();
             ComodinPregunta(p);
             mostrarPregunta(preguntas,n);
+            
             cincuenta.setDisable(true);
         });
         
@@ -119,13 +149,20 @@ public class JuegoController implements Initializable {
             int m = 0;
             if(evaluarPregunta(p,respondido)){
                 m = n+1;
+                
+                
             }else{
                 m = -10;
+                
             }
-            
+            //Secuencia s = new Secuencia(evaluarPregunta(p,respondido),preguntas,m,azar);
+            //s.start();
             mostrarPregunta(preguntas,m);
+            
         });
         panelPreguntas.getChildren().add(h);
+        
+        
     }}else{
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Resultado de operacion");
@@ -133,6 +170,7 @@ public class JuegoController implements Initializable {
         alert.setContentText("JUEGO TERMINADO");
         alert.showAndWait();
         panelPreguntas.getChildren().clear();
+        
         }
     }
     
@@ -151,54 +189,75 @@ public class JuegoController implements Initializable {
        c.cincuentaCincuenta(p);
     
    }
-    
-    
-    /*
-    for(m = 0; m<preguntas.size();m++){
-        //if(m==0){
-        panelPreguntas.getChildren().clear();
-    String[] respuestas = new String[]{preguntas.get(n).getRespuestaCorrecta(),preguntas.get(n).getR2(),preguntas.get(n).getR3(), preguntas.get(n).getR4()};
-    List<String> respuestas_l = Arrays.asList(respuestas);
-    Collections.shuffle(respuestas_l);
-    Label enun = new Label(preguntas.get(n).getEnunciado());
-    enun.setStyle("-fx-font-weight: bold;-fx-font-size: 20;");
-    enun.setWrapText(true);
-    panelPreguntas.getChildren().add(enun);
-    for(int i = 0; i<respuestas_l.size();i++){
-        HBox h = new HBox(5);
-        Label letra =new Label("");
-            switch (i) {
-                case 0:
-                    letra.setText("a.");
-                    break;
-                case 1:
-                    letra.setText("b.");
-                    break;
-                case 2:
-                    letra.setText("c.");
-                    break;
-                default:
-                    letra.setText("d.");
-                    break;
+   
+   private class Secuencia extends Thread{
+      Boolean is ;
+      int secuencia;
+      public Secuencia(Boolean is){
+          this.is = is;
+          this.secuencia = 60;
+      }
+      public void run(){
+          //int r = 60;
+          while(is&&secuencia!=0){
+                String time = secuencia+"";
+                Platform.runLater(()->{
+                    tiempo.setText(time);
+                    
+                });
+                secuencia = secuencia-1;
+          }
+      }
+     public void setSecuencia(){
+         secuencia = 0;
+     }
+   }
+   
+   /*
+   private class Secuencia extends Thread{
+       Boolean sec;
+       ArrayList<Pregunta> preguntas;
+       int tamaño;
+       ArrayList<List<String>> azar;
+       public Secuencia(Boolean sec, ArrayList<Pregunta> preguntas,int tamaño, ArrayList<List<String>> azar){
+           this.sec = sec;
+           this.preguntas = preguntas;
+           this.tamaño = tamaño;
+           this.azar = azar;
+       }
+       public void setSec(Boolean sec){
+           this.sec = sec;
+       }
+        public void run(){
+            int r = 60;
+            //Platform.runLater(()->{mostrarPregunta(preguntas,tamaño,azar);});
+            while(sec&&r!=0&&(tamaño<preguntas.size())){
+                
+                
+                String time = r+"";
+                Platform.runLater(()->{
+                    panelPreguntas.getChildren().clear();
+                    mostrarPregunta(preguntas,tamaño,azar);
+                    tiempo.setText(time);
+                    });
+               System.out.println("1");
+               
+               
+                try {
+                    Thread.sleep(1000);
+                    r = r-1;
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
             }
-        letra.setStyle("-fx-font-weight: bold;-fx-font-size: 20;");
-        String respondido = respuestas_l.get(i);
-        Label res = new Label(respondido);
-        res.setStyle("-fx-font-weight: bold;-fx-font-size: 15;");
-        res.setWrapText(true);
-        h.getChildren().addAll(letra,res);
-        Pregunta p = preguntas.get(n);
-        
-        h.setOnMouseClicked(e->{
-            comprobarPregunta(p,respondido);
-        });
-        panelPreguntas.getChildren().add(h);
+            
+        }
+        public void detener(){
+                sec = false;
+            }
     }
-    //}
-       // else{
-          //  break;
-        //}
-    }
+    */
+    /*
     
 
     }    
