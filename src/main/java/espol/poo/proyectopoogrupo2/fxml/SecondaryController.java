@@ -59,7 +59,8 @@ public class SecondaryController implements Initializable {
     @FXML
     private ScrollPane scrollCompanero;
     */
-    /**
+    /**    private ScrollPane scrollCompanero;
+
      * Initializes the controller class.
      */
     @Override
@@ -69,8 +70,8 @@ public class SecondaryController implements Initializable {
         slparalelo.setDisable(true);
         scrollEstudiante.setPrefSize(100, 200);
         scrollEstudiante.setStyle("-fx-background-color:WHITE");
-        scrollCompanero.setPrefSize(100, 200);
-        scrollCompanero.setStyle("-fx-background-color:WHITE");
+        //scrollCompanero.setPrefSize(100, 200);
+        //scrollCompanero.setStyle("-fx-background-color:WHITE");
         // TODO
     }  
     @FXML
@@ -95,37 +96,37 @@ public class SecondaryController implements Initializable {
         slparalelo.getItems().setAll(filtrado);
         //Borra la lista de estudiantes para evitar que se realice una selección erronea
         scrollEstudiante.getChildren().clear();
-        scrollCompanero.getChildren().clear();
+        //scrollCompanero.getChildren().clear();
     }
     @FXML
     private void cargarEstudiantes(ActionEvent event){
         scrollEstudiante.getChildren().clear();
-        scrollCompanero.getChildren().clear();
+        //scrollCompanero.getChildren().clear();
         ArrayList<Estudiante> estudiantes = (ArrayList<Estudiante>)slparalelo.getValue().getLista();
         if(estudiantes == null){
             scrollEstudiante.getChildren().add(new Label("No hay Estudiantes"));
-            scrollCompanero.getChildren().add(new Label("No hay Estudiantes"));
+            //scrollCompanero.getChildren().add(new Label("No hay Estudiantes"));
             scrollEstudiante.setPrefSize(100, 200);
-            scrollCompanero.setPrefSize(100, 200);
+            //scrollCompanero.setPrefSize(100, 200);
         }
         else{
             VBox estudiante = new VBox();
-            VBox companero = new VBox();
+            //VBox companero = new VBox();
             int n=0;
             for(Estudiante e: estudiantes){
                 Button est = new Button(e.toString());
                 est.setStyle("-fx-background-color:WHITE");
                 Button com = new Button(e.toString());
-                com.setStyle("-fx-background-color:WHITE");
+                //com.setStyle("-fx-background-color:WHITE");
                 estudiante.getChildren().add(est);
-                companero.getChildren().add(com);
+                //companero.getChildren().add(com);
                 n+=25;
             }
             scrollEstudiante.getChildren().add(estudiante);
-            scrollCompanero.getChildren().add(companero);
+            //scrollCompanero.getChildren().add(companero);
             //Regula el tamaño acorde al tamaño predeterminado de un botón
             scrollEstudiante.setPrefSize(350,n);
-            scrollCompanero.setPrefSize(350,n);
+            //scrollCompanero.setPrefSize(350,n);
         }
     }
 
