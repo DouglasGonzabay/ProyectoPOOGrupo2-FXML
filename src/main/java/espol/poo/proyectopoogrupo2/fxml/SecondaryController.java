@@ -48,11 +48,14 @@ public class SecondaryController implements Initializable {
     @FXML
     private VBox vbcompanero;
     @FXML
-    private Button btazar;
-    @FXML
     private AnchorPane scrollEstudiante;
+    
+    static Boolean disposicion = false;
+    //static ArrayList<Estudiante> estudiantesCOp = new ArrayList<>();
     @FXML
-    private AnchorPane scrollCompanero;
+    private VBox jugadores;
+    @FXML
+    private Button volver;
     /*
     @FXML
     private ScrollPane scrollEstudiante;
@@ -62,6 +65,7 @@ public class SecondaryController implements Initializable {
     /**    private ScrollPane scrollCompanero;
 
      * Initializes the controller class.
+     * 
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -101,6 +105,7 @@ public class SecondaryController implements Initializable {
     @FXML
     private void cargarEstudiantes(ActionEvent event){
         scrollEstudiante.getChildren().clear();
+        jugadores.getChildren().clear();
         //scrollCompanero.getChildren().clear();
         ArrayList<Estudiante> estudiantes = (ArrayList<Estudiante>)slparalelo.getValue().getLista();
         if(estudiantes == null){
@@ -115,6 +120,42 @@ public class SecondaryController implements Initializable {
             int n=0;
             for(Estudiante e: estudiantes){
                 Button est = new Button(e.toString());
+                String nombre = e.getNombre();
+                est.setOnAction(eh -> {
+                    if(!disposicion){
+                        disposicion = true;
+                        est.setDisable(disposicion);
+                        jugadores.getChildren().add(new Label("Participante: " + nombre));
+                        volver.setOnAction(he->{
+                    scrollEstudiante.setDisable(false);
+                    disposicion = false;
+                    jugadores.getChildren().clear();
+                    estudiante.getChildren().forEach(node->{
+                        if (node instanceof Button){
+                            Button b = (Button) node;
+                            b.setDisable(false);
+                        }
+                    });                
+                });
+                    }else{
+                       disposicion = false;
+                       jugadores.getChildren().add(new Label("Compañero: " + nombre));
+                       est.setDisable(!disposicion);
+                       scrollEstudiante.setDisable(true);
+                       volver.setOnAction(he->{
+                    scrollEstudiante.setDisable(false);
+                    disposicion = false;
+                    jugadores.getChildren().clear();
+                    estudiante.getChildren().forEach(node->{
+                        if (node instanceof Button){
+                            Button b = (Button) node;
+                            b.setDisable(false);
+                        }
+                    });                
+                });
+                    }
+                });
+                
                 est.setStyle("-fx-background-color:WHITE");
                 Button com = new Button(e.toString());
                 //com.setStyle("-fx-background-color:WHITE");
@@ -128,6 +169,24 @@ public class SecondaryController implements Initializable {
             scrollEstudiante.setPrefSize(350,n);
             //scrollCompanero.setPrefSize(350,n);
         }
+    }
+    public void volverElegir(ArrayList<Estudiante> estudiantes){
+        scrollEstudiante.setDisable(false);
+        jugadores.getChildren().clear();
+        disposicion = false;
+        //scrollEstudiante.getChildren().clear();
+        
+        
+        for(Estudiante e: estudiantes){
+            Button b = (Button)scrollEstudiante.getChildren().get(estudiantes.indexOf(e));
+        if(b.isDisable()){
+            b.setDisable(false);
+        }
+        }
+    }
+
+    private void volverElegir(ActionEvent event) {
+        scrollEstudiante.setDisable(false);
     }
 
 }
