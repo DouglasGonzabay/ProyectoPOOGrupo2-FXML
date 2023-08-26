@@ -126,23 +126,14 @@ public class SecondaryController implements Initializable {
                         disposicion = true;
                         est.setDisable(disposicion);
                         jugadores.getChildren().add(new Label("Participante: " + nombre));
-                        volver.setOnAction(he->{
-                    scrollEstudiante.setDisable(false);
-                    disposicion = false;
-                    jugadores.getChildren().clear();
-                    estudiante.getChildren().forEach(node->{
-                        if (node instanceof Button){
-                            Button b = (Button) node;
-                            b.setDisable(false);
-                        }
-                    });                
-                });
                     }else{
                        disposicion = false;
                        jugadores.getChildren().add(new Label("Compañero: " + nombre));
                        est.setDisable(!disposicion);
                        scrollEstudiante.setDisable(true);
-                       volver.setOnAction(he->{
+                    }
+                });
+                volver.setOnAction(he->{
                     scrollEstudiante.setDisable(false);
                     disposicion = false;
                     jugadores.getChildren().clear();
@@ -152,8 +143,6 @@ public class SecondaryController implements Initializable {
                             b.setDisable(false);
                         }
                     });                
-                });
-                    }
                 });
                 
                 est.setStyle("-fx-background-color:WHITE");
@@ -170,23 +159,4 @@ public class SecondaryController implements Initializable {
             //scrollCompanero.setPrefSize(350,n);
         }
     }
-    public void volverElegir(ArrayList<Estudiante> estudiantes){
-        scrollEstudiante.setDisable(false);
-        jugadores.getChildren().clear();
-        disposicion = false;
-        //scrollEstudiante.getChildren().clear();
-        
-        
-        for(Estudiante e: estudiantes){
-            Button b = (Button)scrollEstudiante.getChildren().get(estudiantes.indexOf(e));
-        if(b.isDisable()){
-            b.setDisable(false);
-        }
-        }
-    }
-
-    private void volverElegir(ActionEvent event) {
-        scrollEstudiante.setDisable(false);
-    }
-
 }
