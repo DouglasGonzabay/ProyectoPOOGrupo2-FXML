@@ -115,12 +115,15 @@ public class Pregunta implements Comparable<Pregunta>, Serializable{
     }
     catch(ClassNotFoundException e){
       System.out.println("Archivo vacío");
+      preg = null;
     }
     catch(IOException ej){
       ej.printStackTrace();
+      preg = null;
     }
     catch(Exception ex){
       ex.printStackTrace();
+      preg = null;
     }
     return preg;
   }
