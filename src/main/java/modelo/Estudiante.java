@@ -10,9 +10,10 @@ package modelo;
  */
 import java.util.ArrayList;
 import java.io.*;
-public class Estudiante{
+public class Estudiante implements Serializable{
   private String nombre;
   private int matricula;
+  private static final long serialVersionUID = 1;
   public Estudiante(String n, int m){
     nombre = n;
     matricula = m;
