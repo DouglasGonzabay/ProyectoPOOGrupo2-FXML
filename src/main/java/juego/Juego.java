@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 public class Juego implements Serializable{
   
-  private String materia;
-  private int numParalelo;
+  //private String materia;
+  //private int numParalelo;
   private Estudiante participante;
   private Estudiante companero;
   private ArrayList<Pregunta> preguntas;
