@@ -16,6 +16,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
@@ -72,8 +74,11 @@ public class SecondaryController implements Initializable {
     static Estudiante participante;
     static Estudiante companero;
     static ArrayList<Pregunta> preguntas;
+    static Materia materiaElecta;
     @FXML
     private Button establecerPreg;
+    @FXML
+    private VBox visNivel;
     
     
     @Override
@@ -84,6 +89,9 @@ public class SecondaryController implements Initializable {
         scrollEstudiante.setPrefSize(100, 200);
         scrollEstudiante.setStyle("-fx-background-color:WHITE");
         btempezar.setDisable(true);
+        //Desactiva la elección de niveles para preguntas
+        ingnivel.setDisable(true);
+        establecerPreg.setDisable(true);
         //scrollCompanero.setPrefSize(100, 200);
         //scrollCompanero.setStyle("-fx-background-color:WHITE");
         // TODO
@@ -100,16 +108,53 @@ public class SecondaryController implements Initializable {
     }
     @FXML
     private void modParalelo(ActionEvent event){
+        
+        visNivel.getChildren().clear();
+        ingnivel.setDisable(false);
+        establecerPreg.setDisable(false);
         slparalelo.setDisable(false);
         btempezar.setDisable(true);
+        //Establecer atributo de materia para validaciones
+        materiaElecta =(Materia)slmateria.getValue();
         ArrayList<Paralelo> par = (ArrayList<Paralelo>)slmateria.getValue().getParalelos();
         String codigo = (String)slmateria.getValue().getCodigo();
-        preguntas = Pregunta.leerPreguntas(".\\archivos\\"+codigo+".dat");
+        //CDomprueba que existan preguntas el arrayList
+        try{
+            preguntas = Pregunta.leerPreguntas(".\\archivos\\"+codigo+".dat");
+        ///Visualizador de preguntas
+        ArrayList<Integer> nivelesUnicos = new ArrayList<>();
+        ArrayList<Integer> cantidad = new ArrayList<>();
+        int NivelMax = materiaElecta.getNiveles();
+        for(int i =1; i<=NivelMax;i++){
+            nivelesUnicos.add(i);
+            cantidad.add(0);
+        }
+        for(Pregunta p: preguntas){
+            int level = p.getNivel();
+            for(Integer h: nivelesUnicos){
+                if(h==level){
+                    int n = cantidad.get(nivelesUnicos.indexOf(h))+1;
+                    cantidad.set(nivelesUnicos.indexOf(h),n);
+                }
+            }
+            //nivelesDisponibles.add(level);
+            //indicesPreg.add(preguntas.indexOf(p));
+        }
+        visNivel.getChildren().add(new Label("Cantidad de preguntas"));
+        for(Integer h: nivelesUnicos){
+            Label etiqueta = new Label("Nivel " + h + ": "+cantidad.get(nivelesUnicos.indexOf(h)));
+            visNivel.getChildren().add(etiqueta);
+        }
+        
+        ///
         //Comprobar
         for(Pregunta p: preguntas){
             System.out.println(p);
         }
         //
+        }catch(NullPointerException f){
+            visNivel.getChildren().add(new Label("No Existen preguntas"));
+        }
         TerminoAcademico terJuego = NewClass.terminoConfigurado();
         System.out.println(par.size());
         ArrayList<Paralelo> filtrado = new ArrayList<>();
@@ -191,5 +236,53 @@ public class SecondaryController implements Initializable {
             scrollEstudiante.setPrefSize(350,n);
             //scrollCompanero.setPrefSize(350,n);
         }
+    }
+    @FXML
+    private void cargarPreguntas(){
+        ArrayList<Pregunta> preguntasFiltradas = new ArrayList<>();
+        ArrayList<Integer> nivelesUnicos = new ArrayList<>();
+        ArrayList<Integer> cantidad = new ArrayList<>();
+        int NivelMax = materiaElecta.getNiveles();
+        for(int i =1; i<=NivelMax;i++){
+            nivelesUnicos.add(i);
+            cantidad.add(0);
+        }
+        //Lista que obtiene los niveles de cada pregunta
+        ArrayList<Integer> nivelesDisponibles = new ArrayList<>();
+        //Lista que obtiene los indices de la preguntas
+        ArrayList<Integer> indicesPreg = new ArrayList<>();
+        Collections.sort(nivelesUnicos);
+        for(Pregunta p: preguntas){
+            int level = p.getNivel();
+            for(Integer h: nivelesUnicos){
+                if(h==level){
+                    int n = cantidad.get(nivelesUnicos.indexOf(h))+1;
+                    cantidad.set(nivelesUnicos.indexOf(h),n);
+                }
+            }
+            nivelesDisponibles.add(level);
+            indicesPreg.add(preguntas.indexOf(p));
+        }
+        /*
+        visNivel.getChildren().add(new Label("Cantidad de preguntas"));
+        for(Integer h: nivelesUnicos){
+            Label etiqueta = new Label("Nivel " + h + ": "+cantidad.get(nivelesUnicos.indexOf(h)));
+            visNivel.getChildren().add(etiqueta);
+        }*/
+        
+        
+        String cantNiveles = ingnivel.getText();
+        try{
+            int cant = Integer.parseInt(cantNiveles);
+            
+        }catch(NumberFormatException nb){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error de conversión");
+            alert.setHeaderText("Notificacion");
+            alert.setContentText("Solo puede agregar números"); 
+            alert.showAndWait();
+            ingnivel.setText("");
+        }
+        
     }
 }
