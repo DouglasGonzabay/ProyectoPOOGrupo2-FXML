@@ -159,12 +159,15 @@ public class Juego implements Serializable{
     }
     catch(ClassNotFoundException e){
       System.out.println("Archivo vacío");
+      reportes = new ArrayList<>();
     }
     catch(IOException ej){
       ej.printStackTrace();
+      reportes = new ArrayList<>();
     }
     catch(Exception ex){
       ex.printStackTrace();
+      reportes = new ArrayList<>();
     }
     return reportes;
   }
