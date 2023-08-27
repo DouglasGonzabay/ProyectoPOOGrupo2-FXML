@@ -22,13 +22,11 @@
    <center>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox prefHeight="365.0" prefWidth="134.0">
+            <VBox prefHeight="365.0" prefWidth="134.0" spacing="15.0">
                <children>
                   <TextField fx:id="ingnivel" promptText="Ingresar nivel" />
-                  <VBox prefHeight="275.0" prefWidth="134.0">
-                     <children>
-                        <Button fx:id="establecerPreg" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" text="Aceptar" textAlignment="CENTER" />
-                     </children></VBox>
+                  <Button fx:id="establecerPreg" mnemonicParsing="false" onAction="#cargarPreguntas" prefHeight="26.0" prefWidth="134.0" text="Aceptar" textAlignment="CENTER" />
+                  <VBox fx:id="visNivel" prefHeight="275.0" prefWidth="134.0" spacing="15.0" />
                </children>
             </VBox>
             <VBox fx:id="vbparticipante" prefHeight="365.0" prefWidth="143.0" spacing="20.0">
