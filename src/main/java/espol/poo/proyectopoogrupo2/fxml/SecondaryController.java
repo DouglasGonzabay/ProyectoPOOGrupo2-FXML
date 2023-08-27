@@ -20,10 +20,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import juego.Juego;
 import modelo.Estudiante;
 import modelo.Materia;
 import modelo.NewClass;
 import modelo.Paralelo;
+import modelo.Pregunta;
 import modelo.TerminoAcademico;
 /**
  * FXML Controller class
@@ -67,6 +69,13 @@ public class SecondaryController implements Initializable {
      * Initializes the controller class.
      * 
      */
+    static Estudiante participante;
+    static Estudiante companero;
+    static ArrayList<Pregunta> preguntas;
+    @FXML
+    private Button establecerPreg;
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ArrayList<Materia> materias2 = NewClass.leerMaterias(".\\archivos\\materias.txt");
@@ -74,6 +83,7 @@ public class SecondaryController implements Initializable {
         slparalelo.setDisable(true);
         scrollEstudiante.setPrefSize(100, 200);
         scrollEstudiante.setStyle("-fx-background-color:WHITE");
+        btempezar.setDisable(true);
         //scrollCompanero.setPrefSize(100, 200);
         //scrollCompanero.setStyle("-fx-background-color:WHITE");
         // TODO
@@ -84,28 +94,47 @@ public class SecondaryController implements Initializable {
     }
     @FXML
     private void switchToJuego()throws IOException {
+        Juego nuevoJuego = new Juego(participante,companero,preguntas);
+        System.out.println(nuevoJuego.toString());
         App.setRoot("juego");
     }
     @FXML
     private void modParalelo(ActionEvent event){
         slparalelo.setDisable(false);
+        btempezar.setDisable(true);
         ArrayList<Paralelo> par = (ArrayList<Paralelo>)slmateria.getValue().getParalelos();
+        String codigo = (String)slmateria.getValue().getCodigo();
+        preguntas = Pregunta.leerPreguntas(".\\archivos\\"+codigo+".dat");
+        //Comprobar
+        for(Pregunta p: preguntas){
+            System.out.println(p);
+        }
+        //
         TerminoAcademico terJuego = NewClass.terminoConfigurado();
+        System.out.println(par.size());
         ArrayList<Paralelo> filtrado = new ArrayList<>();
+        
         for(Paralelo p: par){
             if(terJuego.toString().equals(p.getTermino().toString())){
                 filtrado.add(p);
             }
         }
-        slparalelo.getItems().setAll(filtrado);
+            if(!filtrado.isEmpty()){
+                slparalelo.getItems().setAll(filtrado);
+            }else{
+                slparalelo.setPromptText("No existen paralelos");
+               slparalelo.setDisable(true);
+            }
+        //scrollCompanero.getChildren().clear();
+        
         //Borra la lista de estudiantes para evitar que se realice una selección erronea
         scrollEstudiante.getChildren().clear();
-        //scrollCompanero.getChildren().clear();
     }
     @FXML
     private void cargarEstudiantes(ActionEvent event){
         scrollEstudiante.getChildren().clear();
         jugadores.getChildren().clear();
+        btempezar.setDisable(true);
         //scrollCompanero.getChildren().clear();
         ArrayList<Estudiante> estudiantes = (ArrayList<Estudiante>)slparalelo.getValue().getLista();
         if(estudiantes == null){
@@ -126,17 +155,21 @@ public class SecondaryController implements Initializable {
                         disposicion = true;
                         est.setDisable(disposicion);
                         jugadores.getChildren().add(new Label("Participante: " + nombre));
+                        participante = e;
                     }else{
                        disposicion = false;
                        jugadores.getChildren().add(new Label("Compañero: " + nombre));
                        est.setDisable(!disposicion);
                        scrollEstudiante.setDisable(true);
+                       btempezar.setDisable(false);
+                       companero = e;
                     }
                 });
                 volver.setOnAction(he->{
                     scrollEstudiante.setDisable(false);
                     disposicion = false;
                     jugadores.getChildren().clear();
+                    btempezar.setDisable(true);
                     estudiante.getChildren().forEach(node->{
                         if (node instanceof Button){
                             Button b = (Button) node;
