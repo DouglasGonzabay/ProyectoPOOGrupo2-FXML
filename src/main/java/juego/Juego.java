@@ -10,14 +10,19 @@ package juego;
  */
 import modelo.*;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
-public class Juego{
+public class Juego implements Serializable{
   
   private String materia;
   private int numParalelo;
@@ -33,6 +38,7 @@ public class Juego{
   private String fecha;
   private long tiempo;
   private ArrayList<String> preguntasContestadas;
+  private static final long serialVersionUID = 1;
   
 // que quieres hacer aquí para ayudarte : mira crea el constructor con esos atributos y crea uno solo con un atributo arrayListString mejor ok ( 
   public Juego(Estudiante e, Estudiante c, ArrayList<Pregunta> p){
@@ -47,7 +53,7 @@ public class Juego{
       this.nCom = 0;
       this.premio = "";
       this.preguntasContestadas = new ArrayList<>();
-      this.preguntas = new ArrayList<>();
+      this.preguntas = p;
   }
   
   /*public Juego(String m, int num, Estudiante participante, Estudiante companero, ArrayList<Pregunta> preguntas){
@@ -130,6 +136,41 @@ public class Juego{
   }
   public void setPremio(String p){
       premio = p;
+  }
+  //Escribir archivo binario de datos del juego
+  public static void escribirReportes(ArrayList<Juego> juegos){
+    try{
+      ObjectOutputStream escribir = new ObjectOutputStream(new FileOutputStream(".\\archivos\\Reporte.dat"));
+      escribir.writeObject(juegos);
+      escribir.flush();
+      escribir.close();
+    }
+    catch(IOException e){
+      e.printStackTrace();
+    }
+  }
+  //Leer un archivo binario de reportes de juego
+  public static ArrayList<Juego> leerReportes(){
+    ArrayList<Juego> reportes = new ArrayList<>();
+    try{
+      ObjectInputStream p = new ObjectInputStream(new FileInputStream(".\\archivos\\Reporte.dat"));
+      reportes = (ArrayList<Juego>)p.readObject();
+      p.close();
+    }
+    catch(ClassNotFoundException e){
+      System.out.println("Archivo vacío");
+    }
+    catch(IOException ej){
+      ej.printStackTrace();
+    }
+    catch(Exception ex){
+      ex.printStackTrace();
+    }
+    return reportes;
+  }
+  
+  public String toString(){
+      return participante + "; " + companero + "; " + preguntas.size();
   }
   
   //Para detalle de reporte
