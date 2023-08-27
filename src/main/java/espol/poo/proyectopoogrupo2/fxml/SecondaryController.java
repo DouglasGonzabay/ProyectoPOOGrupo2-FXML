@@ -74,6 +74,7 @@ public class SecondaryController implements Initializable {
     static Estudiante participante;
     static Estudiante companero;
     static ArrayList<Pregunta> preguntas;
+    static ArrayList<Pregunta> preguntasFiltradas;
     static Materia materiaElecta;
     @FXML
     private Button establecerPreg;
@@ -100,9 +101,13 @@ public class SecondaryController implements Initializable {
     private void switchToPrimary() throws IOException {
         App.setRoot("primary");
     }
+    //Escribe el reporte antes de iniciar el juego
     @FXML
     private void switchToJuego()throws IOException {
-        Juego nuevoJuego = new Juego(participante,companero,preguntas);
+        Juego nuevoJuego = new Juego(participante,companero,preguntasFiltradas);
+        ArrayList<Juego> lectura = Juego.leerReportes();
+        lectura.add(nuevoJuego);
+        Juego.escribirReportes(lectura);
         System.out.println(nuevoJuego.toString());
         App.setRoot("juego");
     }
@@ -240,7 +245,7 @@ public class SecondaryController implements Initializable {
     }
     @FXML
     private void cargarPreguntas(){
-        ArrayList<Pregunta> preguntasFiltradas = new ArrayList<>();
+        preguntasFiltradas = new ArrayList<>();
         ArrayList<Integer> nivelesUnicos = new ArrayList<>();
         ArrayList<Integer> cantidad = new ArrayList<>();
         int NivelMax = materiaElecta.getNiveles();
@@ -275,6 +280,44 @@ public class SecondaryController implements Initializable {
         String cantNiveles = ingnivel.getText();
         try{
             int cant = Integer.parseInt(cantNiveles);
+            //Si no existe preguntas del nivel máximo de la materia, este nivel se descarta para el juego
+            if(cantidad.contains(0)){
+                int indice = cantidad.indexOf(0);
+                nivelesUnicos.remove(0);
+                cantidad.remove(indice);
+            }
+            //
+            if(cant>Collections.min(cantidad)){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Preguntas insuficientes");
+                alert.setHeaderText("Notificacion");
+                alert.setContentText("Número supera la cantidad mínima de preguntas existentes"); 
+                alert.showAndWait();
+                ingnivel.setText("");
+            }else if(cant<=0){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error al establecer preguntas");
+                alert.setHeaderText("Notificacion");
+                alert.setContentText("Valor inválido"); 
+                alert.showAndWait();
+                ingnivel.setText("");
+            }else{
+                //Filtrar Preguntas
+                
+                for(int m = 0; m<nivelesUnicos.size();m++){
+                    int contador = 1;
+                for(int n = 0; n<nivelesDisponibles.size();n++){
+                    
+                        if((nivelesDisponibles.get(n) == nivelesUnicos.get(m))&&contador<=cant){
+                            preguntasFiltradas.add(preguntas.get(n));
+                            contador+=1;
+                        }else{
+                            contador=0;
+                            //n = nivelesDisponibles.size()+1;
+                        }
+                    }
+                }
+            }
             
         }catch(NumberFormatException nb){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
