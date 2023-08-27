@@ -154,6 +154,7 @@ public class SecondaryController implements Initializable {
         //
         }catch(NullPointerException f){
             visNivel.getChildren().add(new Label("No Existen preguntas"));
+            establecerPreg.setDisable(true);
         }
         TerminoAcademico terJuego = NewClass.terminoConfigurado();
         System.out.println(par.size());
