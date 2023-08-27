@@ -27,7 +27,7 @@
                   <TextField fx:id="ingnivel" promptText="Ingresar nivel" />
                   <VBox prefHeight="275.0" prefWidth="134.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" text="Aceptar" textAlignment="CENTER" />
+                        <Button fx:id="establecerPreg" mnemonicParsing="false" prefHeight="26.0" prefWidth="134.0" text="Aceptar" textAlignment="CENTER" />
                      </children></VBox>
                </children>
             </VBox>
