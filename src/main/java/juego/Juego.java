@@ -39,6 +39,7 @@ public class Juego implements Serializable{
   private long tiempo;
   private ArrayList<String> preguntasContestadas;
   private static final long serialVersionUID = 1;
+  private String detalle;
   
 // que quieres hacer aquí para ayudarte : mira crea el constructor con esos atributos y crea uno solo con un atributo arrayListString mejor ok ( 
   public Juego(Estudiante e, Estudiante c, ArrayList<Pregunta> p){
@@ -55,6 +56,16 @@ public class Juego implements Serializable{
       this.preguntasContestadas = new ArrayList<>();
       this.preguntas = p;
   }
+  public Juego (String fecha,Estudiante participante,int nivel,long tiempo,int pCont,int numComodines,String premio,String detalles){
+      this.fecha=fecha;
+      this.participante=participante;
+      this.nivelMax=nivel;
+      this.tiempo=tiempo;
+      this.pCont=pCont;
+      this.nCom=numComodines;
+      this.premio=premio;
+      this.detalle=detalles;
+    }
   
   /*public Juego(String m, int num, Estudiante participante, Estudiante companero, ArrayList<Pregunta> preguntas){
     this.materia=m;
@@ -137,6 +148,10 @@ public class Juego implements Serializable{
   public void setPremio(String p){
       premio = p;
   }
+  public String getPremio(){
+      return premio;
+  }
+  
   //Escribir archivo binario de datos del juego
   public static void escribirReportes(ArrayList<Juego> juegos){
     try{
@@ -196,4 +211,5 @@ public class Juego implements Serializable{
           System.out.println(j.toString()+" Nivel Max: "+j.getNivelMax() + " P contestadas: " + j.getPcon() + " Puntaje: "+j.getPuntaje() + " Tiempo: " + j.getTiempo() + " Fecha: " + j.getFecha());
       }
   }
+  
 }
