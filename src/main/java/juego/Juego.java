@@ -126,7 +126,7 @@ public class Juego implements Serializable{
     nCom +=1;
   }
   public void setTiempo(){
-      tiempo = (tiempo - System.currentTimeMillis())/1000;
+      tiempo = (System.currentTimeMillis() - tiempo)/1000;
   }
   public void agregarComodin(String com){
       comodinesUsados.add(com);
@@ -190,5 +190,10 @@ public class Juego implements Serializable{
     
   }
 */
-  
+  public static void main(String[] arr){
+      ArrayList<Juego> reportes = Juego.leerReportes();
+      for(Juego j: reportes){
+          System.out.println(j.toString()+" Nivel Max: "+j.getNivelMax() + " P contestadas: " + j.getPcon() + " Puntaje: "+j.getPuntaje() + " Tiempo: " + j.getTiempo() + " Fecha: " + j.getFecha());
+      }
+  }
 }
