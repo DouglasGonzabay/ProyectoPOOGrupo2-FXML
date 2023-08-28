@@ -137,7 +137,7 @@ public class Juego implements Serializable{
     nCom +=1;
   }
   public void setTiempo(){
-      tiempo = (System.currentTimeMillis() - tiempo)/1000;
+      tiempo = (System.currentTimeMillis()- tiempo)/1000;
   }
   public void agregarComodin(String com){
       comodinesUsados.add(com);
@@ -151,6 +151,7 @@ public class Juego implements Serializable{
   public String getPremio(){
       return premio;
   }
+  
   
   //Escribir archivo binario de datos del juego
   public static void escribirReportes(ArrayList<Juego> juegos){
