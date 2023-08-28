@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -22,7 +21,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import juego.Juego;
 import modelo.Comodin;
 import modelo.Pregunta;
 
@@ -58,7 +59,10 @@ public class JuegoController implements Initializable {
     private Label lbpregunta;
     @FXML
     private Button btSalir;
-   
+    @FXML
+    private VBox listPreguntas;
+    static ArrayList<Juego> juegos;
+    static Juego j;
     /**
      * Initializes the controller class.
      */
@@ -68,20 +72,20 @@ public class JuegoController implements Initializable {
         // TODO
         //value = true;
         btSalir.setDisable(true);
+        /*
         Pregunta pregunta1 = new Pregunta("¿Cuál es el atributo de campo que permite acceder a cualquier atributo o metodo sin impedimento alguno?", 1, "Public","Private","Protected","Defect");
   Pregunta pregunta2 = new Pregunta("Si tenemos que escribir por consola una variable de tipo char ¿Cúal de estas opciones es la correcta para inicializar una variable char por Scanner (Scanner sc = new Scanner(System.in)): ", 1, "sc.next().charAt(0)","sc.nextChar()","sc.nexInt()","sc.nextLine()");
   Pregunta pregunta3 = new Pregunta("¿Cual debe ser la salida de la siguiente linea?: String mes = String(12)", 2, "Error","12","String 12","Ninguna de las anteriores");
   Pregunta pregunta4 = new Pregunta("Es la habilidad de definir comportamiento especializado de un subclase: ",3,"Sobrecarga de métodos","Hilos","Sobreescritura de métodos","Ninguna");
   Pregunta pregunta5 = new Pregunta("Es un contrato de lo que una clase puede hacer sin decirle como hacerlo:  ",3,"Interfaces","Métodos","Sobreescritura de métodos","Herencia");
   Pregunta pregunta6 = new Pregunta("¿Cuál palabra clave sirve para heredar los metodos y atributos de una clase Padre a una clase Hija?", 2, "extends ","extend","implements","inherit");
-    ArrayList<Pregunta> preguntas = new ArrayList<>();
-    preguntas.add(pregunta1);
-    preguntas.add(pregunta2);
-    preguntas.add(pregunta3);
-    preguntas.add(pregunta4);
-    preguntas.add(pregunta5);
-    preguntas.add(pregunta6);
+    */
+    juegos = Juego.leerReportes();
+    j = juegos.get(Juego.leerReportes().size()-1);
+    ArrayList<Pregunta> preguntas = j.getPreguntas();
     Collections.sort(preguntas);
+    participante.setText("Participante: \n"+j.getParticipante());
+    compañero.setText("Compañero: \n"+j.getCompanero());
     /*
     ArrayList<List<String>> azar = new ArrayList<>();
     for(Pregunta preg: preguntas){
@@ -90,6 +94,9 @@ public class JuegoController implements Initializable {
         Collections.shuffle(respuestas_l);
         azar.add(respuestas_l);
     }*/
+    for(int i = 0; i<preguntas.size();i++){
+        listPreguntas.getChildren().add(new Label("Pregunta "+(i+1)));
+    }
     int n = 0;
     //int tamaño = preguntas.size();
     //m =0;
@@ -101,7 +108,8 @@ public class JuegoController implements Initializable {
     
     public void mostrarPregunta(ArrayList<Pregunta> preguntas, int n){
         if(n<preguntas.size()&&n!=-10){
-        
+        Label l = (Label)listPreguntas.getChildren().get(n);
+        l.setTextFill(Color.BLUE);
         lbpregunta.setText("");
         panelPreguntas.getChildren().clear();
         lbpregunta.setText("Pregunta Nº"+(n+1)+"  Nivel: "+preguntas.get(n).getNivel());
@@ -145,19 +153,42 @@ public class JuegoController implements Initializable {
             //s.start();
             ComodinPregunta(p);
             mostrarPregunta(preguntas,n);
-            
+            j.agregarComodin("50/50");
+            j.setnCom();
             cincuenta.setDisable(true);
         });
         
         h.setOnMouseClicked(e->{
             int m = 0;
             if(evaluarPregunta(p,respondido)){
+                
+                
+                Label elec = (Label)listPreguntas.getChildren().get(n);
+                j.agregarPregunta(preguntas.get(n).getEnunciado());
+                elec.setTextFill(Color.GREEN);
+                //Agrega Comodin Vacío
+                j.agregarComodin("-");
+                
+                j.setPuntaje(preguntas.get(n).getNivel()*10);
+                j.setPcon();
+                tiempo.setText(j.getPuntaje()+"");
+                //Setea el nivel maximo de la pregunta unicamente si se paso efectivamente un nivel
+                if(preguntas.get(n).getNivel()>1){
+                    j.setNivelMax(preguntas.get(n).getNivel()-1);
+                }else if((n)==(preguntas.size()-1)){
+                    j.setNivelMax(preguntas.get(n).getNivel());
+                }
                 m = n+1;
-                
-                
             }else{
-                m = -10;
                 
+                //Agrega Comodin Vacío
+                j.agregarComodin("-");
+                //Solo si el anterior nivel constaba de un valor diferente de cero, entonces setea al nivel anterior cuando se contesta mal
+                //if((preguntas.get(n-1).getNivel()!=preguntas.get(n).getNivel())&&(preguntas.indexOf(preguntas.get(n))!=0)){
+                j.setNivelMax(preguntas.get(n).getNivel()-1);
+                //}
+                
+                m = -10;
             }
             //Secuencia s = new Secuencia(evaluarPregunta(p,respondido),preguntas,m,azar);
             //s.start();
@@ -168,6 +199,9 @@ public class JuegoController implements Initializable {
         
         
     }}else{
+        
+        //Label elec = (Label)listPreguntas.getChildren().get(n);
+        //elec.setTextFill(Color.RED);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Resultado de operacion");
         alert.setHeaderText("Notificacion");
@@ -175,7 +209,10 @@ public class JuegoController implements Initializable {
         alert.showAndWait();
         panelPreguntas.getChildren().clear();
         btSalir.setDisable(false);
-        
+        j.setTiempo();
+        juegos.remove(juegos.size()-1);
+        juegos.add(j);
+        Juego.escribirReportes(juegos);
         }
     }
     
