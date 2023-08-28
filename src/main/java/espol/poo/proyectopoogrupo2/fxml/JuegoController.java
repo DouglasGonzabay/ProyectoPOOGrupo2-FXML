@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -63,6 +64,10 @@ public class JuegoController implements Initializable {
     private VBox listPreguntas;
     static ArrayList<Juego> juegos;
     static Juego j;
+    @FXML
+    private TextField ingresarPremio;
+    @FXML
+    private Button aplicar;
     /**
      * Initializes the controller class.
      */
@@ -72,6 +77,8 @@ public class JuegoController implements Initializable {
         // TODO
         //value = true;
         btSalir.setDisable(true);
+        ingresarPremio.setDisable(true);
+        aplicar.setDisable(true);
         /*
         Pregunta pregunta1 = new Pregunta("¿Cuál es el atributo de campo que permite acceder a cualquier atributo o metodo sin impedimento alguno?", 1, "Public","Private","Protected","Defect");
   Pregunta pregunta2 = new Pregunta("Si tenemos que escribir por consola una variable de tipo char ¿Cúal de estas opciones es la correcta para inicializar una variable char por Scanner (Scanner sc = new Scanner(System.in)): ", 1, "sc.next().charAt(0)","sc.nextChar()","sc.nexInt()","sc.nextLine()");
@@ -157,6 +164,26 @@ public class JuegoController implements Initializable {
             j.setnCom();
             cincuenta.setDisable(true);
         });
+        pComp.setOnMouseClicked(ch->{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Resultado de operacion");
+            alert.setHeaderText("Notificacion");
+            alert.setContentText("Preguntando a " + j.getCompanero().getNombre()+"\nEl dice que la respuesta es: \n" + preguntas.get(n).getRespuestaCorrecta());
+            alert.showAndWait();
+            j.agregarComodin("Consulta Compañero");
+            j.setnCom();
+            pComp.setDisable(true);
+        });
+        pSalon.setOnMouseClicked(ch->{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Resultado de operacion");
+            alert.setHeaderText("Notificacion");
+            alert.setContentText("Preguntando al salón... \nEl Salon dice que la respuesta es: \n" + preguntas.get(n).getRespuestaCorrecta());
+            alert.showAndWait();
+            j.agregarComodin("Consulta Salón");
+            j.setnCom();
+            pSalon.setDisable(true);
+        });
         
         h.setOnMouseClicked(e->{
             int m = 0;
@@ -208,10 +235,21 @@ public class JuegoController implements Initializable {
         alert.setContentText("JUEGO TERMINADO");
         alert.showAndWait();
         panelPreguntas.getChildren().clear();
-        btSalir.setDisable(false);
+        if(j.getNivelMax()>0){
+            ingresarPremio.setDisable(false);
+            aplicar.setDisable(false);
+            aplicar.setOnAction(bt->{
+                String prem = ingresarPremio.getText();
+                j.setPremio(prem);
+                btSalir.setDisable(false);
+            });
+        }else{
+           btSalir.setDisable(false); 
+        }
         j.setTiempo();
         juegos.remove(juegos.size()-1);
         juegos.add(j);
+        //NOTA: El Premio es generado por defecto (Puntos en la lección)
         Juego.escribirReportes(juegos);
         }
     }
