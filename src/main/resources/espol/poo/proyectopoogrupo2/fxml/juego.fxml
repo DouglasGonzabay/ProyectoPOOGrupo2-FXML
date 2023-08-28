@@ -28,7 +28,7 @@
       </VBox>
    </left>
    <right>
-      <VBox alignment="CENTER_LEFT" prefHeight="447.0" prefWidth="160.0" />
+      <VBox fx:id="listPreguntas" alignment="CENTER_LEFT" prefHeight="447.0" prefWidth="160.0" />
    </right>
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="652.0" spacing="10.0" BorderPane.alignment="CENTER">
