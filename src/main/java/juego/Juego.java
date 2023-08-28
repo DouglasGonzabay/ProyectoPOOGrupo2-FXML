@@ -119,8 +119,8 @@ public class Juego implements Serializable{
   public void setPcon(){
     pCont+=1;
   }
-  public void setNivelMax(){
-    nivelMax  +=1;
+  public void setNivelMax(int n){
+    nivelMax  = n;
   }
   public void setnCom(){
     nCom +=1;
